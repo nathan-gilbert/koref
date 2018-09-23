@@ -1,5 +1,5 @@
 # koref
-A coreference resolution engine based on the Reconcile written in Kotlin.
+A coreference resolution engine based on Reconcile written in Kotlin.
 
 ## Roadmap to 1.0
 
