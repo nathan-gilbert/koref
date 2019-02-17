@@ -8,7 +8,7 @@ import java.nio.file.FileSystems
 import java.nio.file.Files
 import kotlin.reflect.KClass
 
-object YAMLParser {
+object YamlParser {
   private val mapper = let {
     val mapper = ObjectMapper(YAMLFactory())
     mapper.registerModule(KotlinModule())
