@@ -9,14 +9,14 @@ import java.nio.file.Files
 import kotlin.reflect.KClass
 
 object YAMLParser {
-    private val mapper = let {
-        val mapper = ObjectMapper(YAMLFactory())
-        mapper.registerModule(KotlinModule())
-        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
-        mapper
-    }
+  private val mapper = let {
+    val mapper = ObjectMapper(YAMLFactory())
+    mapper.registerModule(KotlinModule())
+    mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
+    mapper
+  }
 
-    fun <T: Any> parseDto(fileName: String, dto: KClass<T>): T {
-        return Files.newBufferedReader(FileSystems.getDefault().getPath(fileName)).use { mapper.readValue(it, dto.java) }
-    }
+  fun <T : Any> parseDto(fileName: String, dto: KClass<T>): T {
+    return Files.newBufferedReader(FileSystems.getDefault().getPath(fileName)).use { mapper.readValue(it, dto.java) }
+  }
 }
