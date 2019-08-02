@@ -4,14 +4,14 @@ import koref.utils.YamlParser
 
 data class SystemConfigDto(val baseDataDir: String)
 
-class SystemConfig(private val settingsFile: String = "settings.yml") {
+class SystemConfig(settingsFile: String = "settings.yml") {
+  private lateinit var config: SystemConfigDto
   var isInitialized: Boolean = false
 
   init {
-    if (!settingsFile.isEmpty()) {
-
+    if (settingsFile.isNotEmpty()) {
       //todo read in the file and set configuration values...
-      val config: SystemConfigDto = YamlParser.parseDto("settings.yml", SystemConfigDto::class)
+      config = YamlParser.parseDto("settings.yml", SystemConfigDto::class)
       isInitialized = true
     }
   }

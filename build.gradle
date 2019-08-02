@@ -1,7 +1,7 @@
 buildscript {
   ext {
-    dokkaVersion = '0.9.17'
-    kotlinVersion = '1.3.21'
+    dokkaVersion = '0.9.18'
+    kotlinVersion = '1.3.41'
   }
 
   repositories {
@@ -24,8 +24,8 @@ plugins {
 
 version '1.0-SNAPSHOT'
 mainClassName = 'koref.KorefKt'
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
   jcenter()
