@@ -2,7 +2,9 @@ package koref
 
 import koref.utils.YamlParser
 
-data class SystemConfigDto(val baseDataDir: String)
+data class SystemConfigDto(
+  val baseDataDir: String
+)
 
 class SystemConfig(settingsFile: String = "settings.yml") {
   private lateinit var config: SystemConfigDto
