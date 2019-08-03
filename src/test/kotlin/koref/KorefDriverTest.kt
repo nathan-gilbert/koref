@@ -5,7 +5,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 
 class KorefDriverTest {
   @Test
-  fun `koref driver does not throw exception`() {
+  fun `KorefDriver does not throw exception`() {
     assertDoesNotThrow { main(arrayOf()) }
   }
 }

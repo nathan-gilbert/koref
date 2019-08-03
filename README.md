@@ -4,7 +4,10 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 ## Getting Started
 
 * ./gradlew build
-* ./gradlew run
+* ./gradlew run - Run KorefDriver
+* ./gradlew clean test - Run Unit Tests
+* ./gradlew detekt - Linting
+* ./gradlew dokka - Generate Documentation
 
 ## Roadmap to 1.0
 
