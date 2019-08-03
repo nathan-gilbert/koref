@@ -47,9 +47,8 @@ dependencies {
   compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
   compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+"
   compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.+"
-  testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
-  testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
   testImplementation "org.assertj:assertj-core:$junitAssertJVersion"
+  testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
   testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
 }
 
@@ -66,4 +65,5 @@ detekt {
 
 test {
   useJUnitPlatform()
+  beforeTest { descriptor -> logger.lifecycle("Running test: ${descriptor}") }
 }
