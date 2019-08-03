@@ -1,6 +1,4 @@
-package koref
-
-import koref.utils.YamlParser
+package koref.utils
 
 data class SystemConfigDto(
   val baseDataDir: String

@@ -1,5 +1,7 @@
 package koref
 
+import koref.utils.SystemConfig
+
 /**
  * The main driver for the koref backend.
  */
