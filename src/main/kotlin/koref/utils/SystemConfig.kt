@@ -1,7 +1,10 @@
 package koref.utils
 
 data class SystemConfigDto(
-  val baseDataDir: String
+    val baseDataDir: String,
+    val trainingDataDir: String,
+    val testDataDir: String,
+    val tuningDataDir: String?
 )
 
 class SystemConfig(settingsFile: String = "settings.yml") {
