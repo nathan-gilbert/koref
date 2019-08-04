@@ -8,4 +8,19 @@ class KorefDriverTest {
   fun `KorefDriver does not throw exception`() {
     assertDoesNotThrow { main(arrayOf()) }
   }
+
+  @Test
+  fun `KorefDriver gets settings file argument`() {
+    assertDoesNotThrow { main(arrayOf("-s", "settings.yml")) }
+  }
+
+  @Test
+  fun `KorefDrive handles extra arguments`() {
+    assertDoesNotThrow { main(arrayOf("-s", "", "-a", "arg1", "arg2")) }
+  }
+
+  @Test
+  fun `KorefDriver handles malformed arguments`() {
+    assertDoesNotThrow { main(arrayOf("s", "blah")) }
+  }
 }

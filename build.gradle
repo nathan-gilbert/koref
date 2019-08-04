@@ -64,6 +64,11 @@ detekt {
   config = files("detekt.yml")
 }
 
+test {
+  useJUnitPlatform()
+  beforeTest { descriptor -> logger.lifecycle("Running test: ${descriptor}") }
+}
+
 jacoco {
   toolVersion = "0.8.4"
 }
@@ -86,7 +91,3 @@ jacocoTestCoverageVerification {
   }
 }
 
-test {
-  useJUnitPlatform()
-  beforeTest { descriptor -> logger.lifecycle("Running test: ${descriptor}") }
-}
