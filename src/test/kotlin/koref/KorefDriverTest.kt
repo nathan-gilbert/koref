@@ -15,7 +15,7 @@ class KorefDriverTest {
   }
 
   @Test
-  fun `KorefDrive handles extra arguments`() {
+  fun `KorefDrive handles bad settings and extra arguments`() {
     assertDoesNotThrow { main(arrayOf("-s", "", "-a", "arg1", "arg2")) }
   }
 

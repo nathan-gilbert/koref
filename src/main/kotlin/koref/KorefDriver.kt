@@ -24,6 +24,6 @@ fun main(args: Array<String>) {
   val settingsFile = opts.getOrDefault("-s", listOf()).firstOrNull()
   val config = SystemConfig(settingsFile)
 
-  println("This is Koref.")
+  println("This is the Koref System")
   println("Am I configured: " + if (config.isInitialized) "Yes" else "No")
 }
