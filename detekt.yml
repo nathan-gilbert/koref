@@ -54,7 +54,7 @@ formatting:
   android: false
   autoCorrect: true
   MaximumLineLength:
-    active: false
+    active: true
 
 naming:
   MemberNameEqualsClassName:
