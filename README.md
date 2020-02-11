@@ -8,7 +8,7 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 * ./gradlew clean test - Run Unit Tests
 * ./gradlew detekt - Linting
 * ./gradlew jacocoTestReports - Generate Code Coverage
-* ./graldew jacocoTestCoverageVerification - Check if coverage meets specifications
+* ./gradlew jacocoTestCoverageVerification - Check if coverage meets specifications
 * ./gradlew dokka - Generate Documentation
 
 ## Roadmap to 1.0
