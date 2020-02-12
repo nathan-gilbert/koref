@@ -12,7 +12,7 @@ class SystemConfigTest {
 
   @Test
   fun `SystemConfig handles not finding settings file`() {
-    val config = SystemConfig(settingsFile = "myfile.yml")
+    val config = SystemConfig(settingsFile = "myFile.yml")
     assertFalse(config.isInitialized)
   }
 
