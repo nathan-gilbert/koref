@@ -33,10 +33,14 @@ mainClassName = 'koref.KorefDriverKt'
 sourceCompatibility = "$kotlinJVMVersion"
 
 compileKotlin {
-  kotlinOptions.jvmTarget = "$kotlinJVMVersion"
+  kotlinOptions {
+    jvmTarget = "$kotlinJVMVersion"
+  }
 }
 compileTestKotlin {
-  kotlinOptions.jvmTarget = "$kotlinJVMVersion"
+  kotlinOptions {
+    jvmTarget = "$kotlinJVMVersion"
+  }
 }
 
 repositories {
