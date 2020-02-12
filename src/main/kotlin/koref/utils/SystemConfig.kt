@@ -3,10 +3,14 @@ package koref.utils
 import java.io.File
 
 data class SystemConfigDto(
-  val baseDataDir: String,
-  val trainingDataDir: String,
-  val testDataDir: String,
-  var tuningDataDir: String?
+    val workingDir: String,
+    val baseDataDir: String,
+    val trainDataDir: String,
+    val trainFileList: String,
+    val testDataDir: String,
+    val testFileList: String,
+    var tuneDataDir: String?,
+    var tuneFileList: String?
 )
 
 class SystemConfig(settingsFile: String?) {
@@ -30,17 +34,44 @@ class SystemConfig(settingsFile: String?) {
     }
   }
 
-  fun setTuningDir(dir: String) {
-    config.tuningDataDir = dir
+  fun setTuneDataDir(dir: String) {
+    config.tuneDataDir = dir
+  }
+
+  fun setTuneFileList(fileList: String) {
+    config.tuneFileList = fileList
   }
 
   fun getDataDirs(): Map<String, String> {
     val dataDirs = mutableMapOf<String, String>()
     dataDirs["base"] = config.baseDataDir
-    dataDirs["training"] = config.trainingDataDir
-    dataDirs["testing"] = config.testDataDir
-    dataDirs["tuning"] = config.tuningDataDir ?: ""
-
+    dataDirs["train"] = config.trainDataDir
+    dataDirs["test"] = config.testDataDir
+    dataDirs["tune"] = config.tuneDataDir ?: ""
     return dataDirs
   }
+
+  fun getTrainingFiles(): List<String> {
+    val inFile = "${config.baseDataDir}/${config.trainDataDir}/${config.trainFileList}"
+    return readFileAsLines(inFile)
+  }
+
+  fun getTestingFiles(): List<String> {
+    val inFile = "${config.baseDataDir}/${config.testDataDir}/${config.testFileList}"
+    return readFileAsLines(inFile)
+  }
+
+  fun getTuningFiles(): List<String> {
+    if (config.tuneFileList != null) {
+      val inFile = "${config.baseDataDir}/${config.tuneDataDir}/${config.tuneFileList}"
+      return readFileAsLines(inFile)
+    }
+    return emptyList()
+  }
+
+  fun getWorkingDir(): String {
+    return config.workingDir
+  }
+
+  private fun readFileAsLines(fileName: String): List<String> = File(fileName).useLines { it.toList() }
 }
