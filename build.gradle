@@ -1,8 +1,8 @@
 buildscript {
   ext {
-    detektVersion = '1.5.1'
+    detektVersion = '1.7.1'
     dokkaVersion = '0.10.1'
-    kotlinVersion = '1.3.61'
+    kotlinVersion = '1.3.71'
     kotlinJVMVersion = '1.8'
     junitJupiterVersion = '5.5.0'
     junitAssertJVersion = '3.12.2'
@@ -23,9 +23,9 @@ buildscript {
 plugins {
   id "jacoco"
   id "application"
-  id "org.jetbrains.kotlin.jvm" version "1.3.41"
-  id "org.jetbrains.dokka" version "0.9.18"
-  id "io.gitlab.arturbosch.detekt" version "1.0.0-RC16"
+  id "org.jetbrains.kotlin.jvm" version "1.3.71"
+  id "org.jetbrains.dokka" version "0.10.1"
+  id "io.gitlab.arturbosch.detekt" version "1.7.1"
 }
 
 version '1.0.0'
@@ -74,7 +74,7 @@ test {
 }
 
 jacoco {
-  toolVersion = "0.8.4"
+  toolVersion = "0.8.5"
 }
 
 jacocoTestReport {
