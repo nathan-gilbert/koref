@@ -13,11 +13,11 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 
 ## Roadmap to 1.0
 
-* Read in corpus, apply preprocessors 
+* Read in a corpus and then apply preprocessors 
     * Byte spans for all annotations
     * Support for multiple annotators
 * Re-implement Reconcile Data Flow with key exceptions.
     * Client/Server Model
     * Modern and diverse Annotation Packages
-    * Able to handle legacy and some modern data sets
+    * Able to handle legacy and modern coreference data sets
     
