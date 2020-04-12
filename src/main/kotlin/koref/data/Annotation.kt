@@ -1,35 +1,59 @@
 package koref.data
 
+import koref.data.AnnotationType.PHRASE
+import koref.data.AnnotationType.POS
+import koref.data.AnnotationType.SENTENCE
+import koref.data.AnnotationType.TOKEN
+import koref.data.AnnotationType.UNKNOWN
 import java.io.Serializable
 import java.util.TreeSet
+import java.util.UUID
 
 /**
- * An Annotation is the basic data type of Koref.
+ * The type of annotation
+ *
+ * This class has no useful logic; it's just a documentation example.
+ *
+ * @property UNKNOWN
+ * @property TOKEN - a bare linguistic token
+ * @property PHRASE - a combination of tokens
+ * @property SENTENCE - a sentence
+ * @property POS - part of speech tag
  */
-class Annotation(private val type: String?,
-                 private val startOffset: Int,
-                 private val endOffset: Int,
-                 private val content: String?) : Serializable {
+enum class AnnotationType {
+  UNKNOWN, TOKEN, PHRASE, SENTENCE, POS
+}
 
-  // TODO: make this a uuid
-  // Unique id for this Annotation
-  private val id: Int = 0
+/**
+ * Annotations are the basic datatype for Koref.
+ *
+ * This class can hold a variety of data useful for data science & linguistic tabulation.
+ *
+ * @param type the type of annotation
+ * @param startOffset the beginning byte location of the annotation in the document
+ * @param endOffset the ending byte location of the annotation in the document
+ * @param content the textual content of the annotation
+ * @property id a uuid of the annotation
+ * @property features the data science related features for this annotation
+ * @property tokens array of words from the textual content
+ * @property cleanContent cleaned up text content (spaces, newlines stripped)
+ * @property length the length of the annotation is the bytespan length
+ * @constructor Creates an annotation with defined type, start and end offset and textual content
+ */
+class Annotation(val type: AnnotationType,
+                 val startOffset: Int,
+                 val endOffset: Int,
+                 val content: String) : Serializable {
 
-  //Data science features for this annotation
-  private var features: MutableMap<String, String?>? = null
-
-  // A holder for the text content of the annotation span (cleaned up string)
-  private var textContent: String? = content?.replace(" ", "")
-
-  // A holder for the word content of the annotation span
-  private var words: Array<String>? = null
-
+  val id: UUID = UUID.randomUUID()
+  var features: MutableMap<String, String?> = mutableMapOf()
+  val cleanContent: String = content.replace("\n", "")
+  val tokens: List<String> = content.split(" ")
   val length: Int
     get() = endOffset - startOffset
 
   override fun toString(): String {
-    return ("AnnotationImpl: id=" + id + "; type=" + type + "; features=" + features + "; start=" + startOffset +
-        "; end=" + endOffset + System.getProperty("line.separator"))
+    return ("Annotation: id=$id; type=$type; start=$startOffset; end=$endOffset")
   }
 
   override fun equals(other: Any?): Boolean {
@@ -38,84 +62,91 @@ class Annotation(private val type: String?,
       other
     } else return false
 
-    // If their types are not equals then return false
-    if ((type == null) xor (otherAnnotation.type == null)) return false
-    if (type != null && type != otherAnnotation.type) return false
-
-    // If their start offset is not the same then return false
-    if ((startOffset < 0) xor (otherAnnotation.startOffset < 0)) return false
-    if (startOffset >= 0) if (otherAnnotation.startOffset != startOffset) return false
-
-    // If their end offset is not the same then return false
-    if ((endOffset < 0) xor (otherAnnotation.endOffset < 0)) return false
-    if (endOffset >= 0) if (otherAnnotation.endOffset != endOffset) return false
-
-    // If their featureMaps are not equals then return false
-    if ((features == null) xor (otherAnnotation.features == null)) return false
-    if (features != null && features != otherAnnotation.features) return false
-
-    return id != otherAnnotation.id
+    if (type != otherAnnotation.type) return false
+    if (otherAnnotation.startOffset != startOffset) return false
+    if (otherAnnotation.endOffset != endOffset) return false
+    if (features != otherAnnotation.features) return false
+    return id == otherAnnotation.id
   }
 
-  /*
-   * Does this annotation and annotation A overlap.
+  /**
+   * Returns if this annotation overlaps spans with another
+   *
+   * @param A the other annotation
+   * @return boolean
    */
   fun overlaps(A: Annotation?): Boolean {
     return if (A == null) false else this.overlaps(A.startOffset, A.endOffset)
   }
 
-  /*
-   * Does this annotation overlap with the designated span.
+  /**
+   * Checks if this annotation overlaps with a specific span
+   *
+   * @param start
+   * @param end
+   * @return boolean
    */
   fun overlaps(start: Int, end: Int): Boolean {
     if (start < 0 || end < 0) return false
     if (end <= startOffset) return false
-    return start >= endOffset
+    return start <= endOffset
   }
 
   /**
-   * This method is used to determine if this annotation covers completely in span annotation A
+   * Returns true if this annotation completely covers the span of the other annotation
+   *
+   * @param A the other annotation
+   * @return boolean
    */
   fun covers(A: Annotation?): Boolean {
     return if (A == null) false else this.covers(A.startOffset, A.endOffset)
-  } // covers
+  }
 
   /**
-   * This method is used to determine if this annotation covers completely the designated span
+   * Returns true if this annotation completely covers the other span
+   *
+   * @param start
+   * @param end
+   * @return boolean
    */
   fun covers(start: Int, end: Int): Boolean {
     if (start < 0 || end < 0) return false
     return startOffset <= start && end <= endOffset
   }
 
+
   /**
-   * This method is used to determine if this annotation is covered completely the designated span
+   * Returns true if this annotation is completely covered by the span
+   *
+   * @param start
+   * @param end
+   * @return boolean
    */
   fun covered(start: Int, end: Int): Boolean {
     if (start < 0 || end < 0) return false
     return startOffset >= start && end >= endOffset
   }
 
+  /**
+   * Returns true if this annotation is completely covered by the other annotation's span
+   *
+   * @param A the other annotation
+   * @return
+   */
   fun properCovers(A: Annotation?): Boolean {
     return if (A == null) false else this.properCovers(A.startOffset, A.endOffset)
   }
 
-  /*
-   * This method is used to determine if this annotation properly covers the span given.
+  /**
+   *  Returns true if this annotation is completely covered by the span
+   *
+   * @param start
+   * @param end
+   * @return boolean
    */
   fun properCovers(start: Int, end: Int): Boolean {
     if (start < 0 || end < 0) return false
-    return (startOffset < start && end <= endOffset
-        || startOffset <= start && end < endOffset)
-  }
-
-  /**
-   * The length of the annotation span.
-   *
-   * @return the length of the span.
-   */
-  fun spanSize(): Int {
-    return endOffset - startOffset
+    return (start > startOffset && end < endOffset)
   }
 
   /**
@@ -126,12 +157,7 @@ class Annotation(private val type: String?,
    */
   fun compareSpan(A: Annotation?): Int {
     if (A == null) throw NullPointerException()
-    if (startOffset < A.startOffset) return -1
-    if (startOffset > A.startOffset) return 1
-
-    // the start offsets are equal
-    if (endOffset < A.endOffset) return -1
-    return if (endOffset > A.endOffset) 1 else 0
+    return compareSpan(A.startOffset, A.endOffset)
   }
 
   /**
@@ -149,23 +175,31 @@ class Annotation(private val type: String?,
     return if (this.endOffset > endOffset) 1 else 0
   }
 
+  /**
+   * Compares 2 annotations on every field except uuid
+   *
+   * @param other the other annotation
+   * @return -1, 1, 0 (used for comparison algos)
+   */
   fun compareTo(other: Annotation?): Int {
+    if (other == null) throw NullPointerException()
     val spanCompare = this.compareSpan(other)
     if (spanCompare != 0) return spanCompare
-    val typeCompare = type!!.compareTo(other?.type!!)
+    val typeCompare = type.compareTo(other.type)
     if (typeCompare != 0) return typeCompare
-    if (other.features!!.size > features!!.size) return -1
-    if (other.features!!.size < features!!.size) return 1
-    val aKeys = TreeSet(other.features!!.keys)
-    val mKeys = TreeSet(features!!.keys)
+    if (other.features.size > features.size) return -1
+    if (other.features.size < features.size) return 1
+    // compare on key by key basis
+    val aKeys = TreeSet(other.features.keys)
+    val mKeys = TreeSet(features.keys)
     val ai: Iterator<String> = aKeys.iterator()
     val mi: Iterator<String> = mKeys.iterator()
     while (ai.hasNext()) {
       val aK = ai.next()
       val mK = mi.next()
       if (mK.compareTo(aK) != 0) return mK.compareTo(aK)
-      val aV = other.features!![aK]
-      val mV = features!![mK]
+      val aV = other.features[aK]
+      val mV = features[mK]
       if (aV == null && mV == null) {
         continue
       }
@@ -173,19 +207,18 @@ class Annotation(private val type: String?,
       if (mV == null) return -1
       if (mV.compareTo(aV) != 0) return mV.compareTo(aV)
     }
-    val idCompare = Integer.valueOf(id).compareTo(other.id)
-    return if (idCompare != 0) idCompare else 0
+    return 0
   }
 
   override fun hashCode(): Int {
-    var result = id
-    result = 31 * result + (type?.hashCode() ?: 0)
-    result = 31 * result + (features?.hashCode() ?: 0)
+    var result = type.hashCode()
     result = 31 * result + startOffset
     result = 31 * result + endOffset
-    result = 31 * result + (content?.hashCode() ?: 0)
-    result = 31 * result + (textContent?.hashCode() ?: 0)
-    result = 31 * result + (words?.contentHashCode() ?: 0)
+    result = 31 * result + content.hashCode()
+    result = 31 * result + id.hashCode()
+    result = 31 * result + features.hashCode()
+    result = 31 * result + cleanContent.hashCode()
+    result = 31 * result + tokens.hashCode()
     return result
   }
 }

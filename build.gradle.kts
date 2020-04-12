@@ -70,6 +70,7 @@ tasks {
 }
 
 tasks.jacocoTestReport {
+  dependsOn(":test")
   reports {
     xml.isEnabled = false
     csv.isEnabled = false
