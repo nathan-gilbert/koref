@@ -11,6 +11,13 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 * ./gradlew jacocoTestCoverageVerification - Check if coverage meets specifications
 * ./gradlew dokka - Generate Documentation
 
+## Short term TODO
+
+* Add dokka comments to annotation class
+* Add test coverage for annotation class
+* Add uuid, proper bytespan calc, etc to annotation class
+* Add annotation set class
+
 ## Roadmap to 1.0
 
 * Read in a corpus and then apply preprocessors 
