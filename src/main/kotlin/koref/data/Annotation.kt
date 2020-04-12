@@ -28,6 +28,7 @@ enum class AnnotationType {
  * Annotations are the basic datatype for Koref.
  *
  * This class can hold a variety of data useful for data science & linguistic tabulation.
+ * Annotations are defined in term of their type, offset, attributes and id
  *
  * @param type the type of annotation
  * @param startOffset the beginning byte location of the annotation in the document
