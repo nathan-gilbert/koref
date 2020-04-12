@@ -13,18 +13,17 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 
 ## Short term TODO
 
-* Add dokka comments to annotation class
-* Add test coverage for annotation class
-* Add uuid, proper bytespan calc, etc to annotation class
-* Add annotation set class
+* Add dokka comments to annotationSet class
+* Add test coverage for annotationSet class
+* Create utility classes for bytespan calculations, text manipulation
 
 ## Roadmap to 1.0
 
-* Read in a corpus and then apply preprocessors 
+* Read in a corpus and then apply preprocessors
     * Byte spans for all annotations
     * Support for multiple annotators
 * Re-implement Reconcile Data Flow with key exceptions.
     * Client/Server Model
     * Modern and diverse Annotation Packages
     * Able to handle legacy and modern coreference data sets
-    
+

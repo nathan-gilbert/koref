@@ -1,25 +1,38 @@
 package koref.data
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 
 internal class AnnotationSetTest {
 
-  @Test
-  fun getSize() {
+  companion object {
+    private const val sampleText = "My sample text"
+    private val ann = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
   }
 
   @Test
-  fun contains() {
+  fun `can create a set`() {
+    val sentences = AnnotationSet("sentences")
+    sentences.add(ann)
+    assertThat(sentences.size).isEqualTo(1)
   }
 
   @Test
-  fun containsAll() {
+  fun `contains works`() {
+  }
+
+  @Test
+  fun `containsAll works`() {
   }
 
   @Test
   fun isEmpty() {
+    val sentences = AnnotationSet("sentences")
+    assertThat(sentences.isEmpty()).isEqualTo(true)
+    sentences.add(ann)
+    assertThat(sentences.isEmpty()).isEqualTo(false)
   }
 
   @Test
