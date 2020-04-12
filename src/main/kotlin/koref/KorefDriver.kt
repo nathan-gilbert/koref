@@ -2,8 +2,7 @@ package koref
 
 import koref.utils.SystemConfig
 
-fun getOpts(args: Array<String>): Map<String, List<String>>
-{
+fun getOpts(args: Array<String>): Map<String, List<String>> {
   var last = ""
   return args.fold(mutableMapOf()) {
     acc: MutableMap<String, MutableList<String>>, s: String ->

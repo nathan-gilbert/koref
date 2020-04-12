@@ -9,15 +9,18 @@ plugins {
   id("org.jetbrains.dokka") version "0.10.1"
 }
 
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+application {
+  group = "koref"
+  mainClassName = "koref.KorefDriverKt"
+  version = "0.0.1-SNAPSHOT"
+}
+
 repositories {
   jcenter()
   mavenCentral()
 }
-
-group = "koref"
-version = "0.0.1-SNAPSHOT"
-mainClassName = 'koref.KorefDriverKt'
-java.sourceCompatibility = JavaVersion.VERSION_11
 
 dependencies {
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+")
