@@ -38,20 +38,20 @@ internal class AnnotationTest {
   fun `equals works`() {
     val ann1 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
     val ann2 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
-    assertThat(ann1 == ann2).isFalse
-    assertThat(ann1 == ann1).isTrue
-    assertThat(ann1.equals(0)).isFalse
+    assertThat(ann1 == ann2).isEqualTo(false)
+    assertThat(ann1 == ann1).isEqualTo(true)
+    assertThat(ann1.equals(0)).isEqualTo(false)
     @Suppress("EqualsNullCall")
-    assertThat(ann1.equals(null)).isFalse
+    assertThat(ann1.equals(null)).isEqualTo(false)
     val ann3 = Annotation(AnnotationType.TOKEN, 3, sampleWord.length, sampleWord)
-    assertThat(ann1.equals(ann3)).isFalse
+    assertThat(ann1.equals(ann3)).isEqualTo(false)
     val ann4 = Annotation(AnnotationType.TOKEN, -1, -1, "")
-    assertThat(ann3.equals(ann4)).isFalse
+    assertThat(ann3.equals(ann4)).isEqualTo(false)
     val ann5 = Annotation(AnnotationType.TOKEN, -1, 10, "")
-    assertThat(ann4.equals(ann5)).isFalse
+    assertThat(ann4.equals(ann5)).isEqualTo(false)
     val ann6 = Annotation(AnnotationType.TOKEN, -1, -1, "")
     ann6.features["myFeat"] = "0"
-    assertThat(ann4.equals(ann6)).isFalse
+    assertThat(ann4.equals(ann6)).isEqualTo(false)
   }
 
   @Test
@@ -66,56 +66,56 @@ internal class AnnotationTest {
   fun `overlaps works`() {
     val ann1 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
     val ann2 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
-    assertThat(ann1.overlaps(null)).isFalse
-    assertThat(ann1.overlaps(ann2)).isTrue
-    assertThat(ann1.overlaps(-1, 10)).isFalse
-    assertThat(ann1.overlaps(1, -10)).isFalse
+    assertThat(ann1.overlaps(null)).isEqualTo(false)
+    assertThat(ann1.overlaps(ann2)).isEqualTo(true)
+    assertThat(ann1.overlaps(-1, 10)).isEqualTo(false)
+    assertThat(ann1.overlaps(1, -10)).isEqualTo(false)
     val ann3 = Annotation(AnnotationType.TOKEN, 50, longText.length, longText)
-    assertThat(ann1.overlaps(ann3)).isFalse
-    assertThat(ann3.overlaps(ann1)).isFalse
+    assertThat(ann1.overlaps(ann3)).isEqualTo(false)
+    assertThat(ann3.overlaps(ann1)).isEqualTo(false)
   }
 
   @Test
   fun `covers works`() {
     val ann1 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
     val ann2 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
-    assertThat(ann1.covers(ann2)).isTrue
-    assertThat(ann1.covers(null)).isFalse
-    assertThat(ann1.covers(-1, 10)).isFalse
-    assertThat(ann1.covers(1, -10)).isFalse
-    assertThat(ann1.covers(3, 5)).isTrue
-    assertThat(ann1.covers(3, 50)).isFalse
+    assertThat(ann1.covers(ann2)).isEqualTo(true)
+    assertThat(ann1.covers(null)).isEqualTo(false)
+    assertThat(ann1.covers(-1, 10)).isEqualTo(false)
+    assertThat(ann1.covers(1, -10)).isEqualTo(false)
+    assertThat(ann1.covers(3, 5)).isEqualTo(true)
+    assertThat(ann1.covers(3, 50)).isEqualTo(false)
     val ann3 = Annotation(AnnotationType.TOKEN, 50, longText.length, longText)
-    assertThat(ann3.covers(30, 60)).isFalse
+    assertThat(ann3.covers(30, 60)).isEqualTo(false)
   }
 
   @Test
   fun `covered works`() {
     val ann1 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
     val ann2 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
-    assertThat(ann1.covered(ann2.startOffset, ann2.endOffset)).isTrue
-    assertThat(ann1.covered(-1, 10)).isFalse
-    assertThat(ann1.covered(1, -110)).isFalse
-    assertThat(ann1.covered(3, 5)).isFalse
-    assertThat(ann1.covered(3, 50)).isFalse
+    assertThat(ann1.covered(ann2.startOffset, ann2.endOffset)).isEqualTo(true)
+    assertThat(ann1.covered(-1, 10)).isEqualTo(false)
+    assertThat(ann1.covered(1, -110)).isEqualTo(false)
+    assertThat(ann1.covered(3, 5)).isEqualTo(false)
+    assertThat(ann1.covered(3, 50)).isEqualTo(false)
     val ann3 = Annotation(AnnotationType.TOKEN, 50, longText.length, longText)
-    assertThat(ann3.covered(30, 60)).isFalse
+    assertThat(ann3.covered(30, 60)).isEqualTo(false)
   }
 
   @Test
   fun `proper covers works`() {
     val ann1 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
-    assertThat(ann1.properCovers(null)).isFalse
+    assertThat(ann1.properCovers(null)).isEqualTo(false)
     val ann2 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
-    assertThat(ann1.properCovers(ann2)).isFalse
+    assertThat(ann1.properCovers(ann2)).isEqualTo(false)
     val ann3 = Annotation(AnnotationType.TOKEN, 3, sampleWord.length, sampleWord)
-    assertThat(ann1.properCovers(ann3)).isTrue
-    assertThat(ann1.properCovers(-1, 10)).isFalse
-    assertThat(ann1.properCovers(1, -110)).isFalse
-    assertThat(ann1.properCovers(3, 5)).isTrue
-    assertThat(ann1.properCovers(3, 50)).isFalse
+    assertThat(ann1.properCovers(ann3)).isEqualTo(true)
+    assertThat(ann1.properCovers(-1, 10)).isEqualTo(false)
+    assertThat(ann1.properCovers(1, -110)).isEqualTo(false)
+    assertThat(ann1.properCovers(3, 5)).isEqualTo(true)
+    assertThat(ann1.properCovers(3, 50)).isEqualTo(false)
     val ann4 = Annotation(AnnotationType.TOKEN, 50, longText.length, longText)
-    assertThat(ann4.properCovers(30, 60)).isFalse
+    assertThat(ann4.properCovers(30, 60)).isEqualTo(false)
   }
 
   @Test
@@ -189,7 +189,7 @@ internal class AnnotationTest {
   fun `hashCode works`() {
     val ann1 = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
     val ann2 = ann1
-    assertThat(ann1 == ann2).isTrue
+    assertThat(ann1 == ann2).isEqualTo(true)
     assertThat(ann1.hashCode()).isEqualTo(ann2.hashCode())
   }
 }
