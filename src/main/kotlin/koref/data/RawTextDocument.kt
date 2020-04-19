@@ -1,5 +1,3 @@
 package koref.data
 
-class RawTextDocument : Document() {
-
-}
+class RawTextDocument : Document()

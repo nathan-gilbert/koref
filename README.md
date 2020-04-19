@@ -13,9 +13,10 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 
 ## Short term TODO
 
-* Add dokka comments to annotationSet class
-* Add test coverage for annotationSet class
-* Create utility classes for bytespan calculations, text manipulation
+* Process raw text files and create tokens preprocessor.
+* Process MUC documents and create tokens, raw text. 
+* Process ACE documents and create tokens, raw text.
+* Create part of speech, paragraphs, sentences tokens
 
 ## Roadmap to 1.0
 
