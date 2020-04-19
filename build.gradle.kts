@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   id("application")
-  kotlin("jvm") version "1.3.71"
+  kotlin("jvm") version "1.3.72"
   id("io.gitlab.arturbosch.detekt") version "1.7.1"
   id("jacoco")
   id("org.jetbrains.dokka") version "0.10.1"

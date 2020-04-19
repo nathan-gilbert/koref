@@ -12,17 +12,26 @@ import java.util.UUID
  */
 class AnnotationSet(val name: String) : MutableCollection<Annotation>, Serializable {
 
-  private val annotations: MutableMap<UUID, Annotation> = mutableMapOf()
+  private val annotations: MutableList<Annotation> = mutableListOf()
 
   override val size: Int
     get() = annotations.size
 
+  /**
+   *
+   *
+   * @param element
+   * @return true if set contains element
+   */
   override fun contains(element: Annotation): Boolean {
-    TODO("Not yet implemented")
+    return annotations.contains(element)
   }
 
   override fun containsAll(elements: Collection<Annotation>): Boolean {
-    TODO("Not yet implemented")
+    elements.forEach {
+      if (!annotations.contains(it)) return false
+    }
+    return true
   }
 
   override fun isEmpty(): Boolean {
@@ -30,38 +39,41 @@ class AnnotationSet(val name: String) : MutableCollection<Annotation>, Serializa
   }
 
   override fun add(element: Annotation): Boolean {
-    if (annotations.keys.contains(element.id))
-      return false
-    annotations[element.id] = element
+    if (annotations.contains(element)) return false
+    annotations.add(element)
     return true
   }
 
   override fun addAll(elements: Collection<Annotation>): Boolean {
-    TODO("Not yet implemented")
+    var anyFalse = false
+    elements.forEach {
+      if (!add(it)) { anyFalse = true }
+    }
+    return !anyFalse
   }
 
   override fun clear() {
     annotations.clear()
   }
 
-  override fun iterator(): MutableIterator<Annotation> {
-    TODO("Not yet implemented")
-  }
+  override fun iterator(): MutableIterator<Annotation> = annotations.listIterator()
 
   override fun remove(element: Annotation): Boolean {
-    val removed = annotations.remove(element.id)
-    if (removed != null)
-      return true
-    return false
+    return annotations.remove(element)
   }
 
   override fun removeAll(elements: Collection<Annotation>): Boolean {
-    TODO("Not yet implemented")
+    var anyFalse = false
+    elements.forEach { if (!remove(it)) { anyFalse = true} }
+    return !anyFalse
   }
 
   override fun retainAll(elements: Collection<Annotation>): Boolean {
-    TODO("Not yet implemented")
+    val removeAnnotations = mutableListOf<Annotation>()
+    annotations.forEach { ann -> if (!elements.contains(ann)) removeAnnotations.add(ann) }
+    removeAnnotations.forEach {
+      annotations.remove(it)
+    }
+    return true
   }
-
 }
-

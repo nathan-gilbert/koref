@@ -41,10 +41,13 @@ enum class AnnotationType {
  * @property length the length of the annotation is the bytespan length
  * @constructor Creates an annotation with defined type, start and end offset and textual content
  */
-class Annotation(val type: AnnotationType,
-                 val startOffset: Int,
-                 val endOffset: Int,
-                 val content: String) : Serializable {
+@Suppress("TooManyFunctions")
+class Annotation(
+    val type: AnnotationType,
+    val startOffset: Int,
+    val endOffset: Int,
+    val content: String
+) : Serializable {
 
   val id: UUID = UUID.randomUUID()
   var features: MutableMap<String, String?> = mutableMapOf()
@@ -73,11 +76,11 @@ class Annotation(val type: AnnotationType,
   /**
    * Returns if this annotation overlaps spans with another
    *
-   * @param A the other annotation
+   * @param ann the other annotation
    * @return boolean
    */
-  fun overlaps(A: Annotation?): Boolean {
-    return if (A == null) false else this.overlaps(A.startOffset, A.endOffset)
+  fun overlaps(ann: Annotation?): Boolean {
+    return if (ann == null) false else this.overlaps(ann.startOffset, ann.endOffset)
   }
 
   /**
@@ -88,19 +91,18 @@ class Annotation(val type: AnnotationType,
    * @return boolean
    */
   fun overlaps(start: Int, end: Int): Boolean {
-    if (start < 0 || end < 0) return false
-    if (end <= startOffset) return false
+    if (start < 0 || end < 0 || end <= startOffset) return false
     return start <= endOffset
   }
 
   /**
    * Returns true if this annotation completely covers the span of the other annotation
    *
-   * @param A the other annotation
+   * @param ann the other annotation
    * @return boolean
    */
-  fun covers(A: Annotation?): Boolean {
-    return if (A == null) false else this.covers(A.startOffset, A.endOffset)
+  fun covers(ann: Annotation?): Boolean {
+    return if (ann == null) false else this.covers(ann.startOffset, ann.endOffset)
   }
 
   /**
@@ -114,7 +116,6 @@ class Annotation(val type: AnnotationType,
     if (start < 0 || end < 0) return false
     return startOffset <= start && end <= endOffset
   }
-
 
   /**
    * Returns true if this annotation is completely covered by the span
@@ -131,11 +132,11 @@ class Annotation(val type: AnnotationType,
   /**
    * Returns true if this annotation is completely covered by the other annotation's span
    *
-   * @param A the other annotation
+   * @param ann the other annotation
    * @return
    */
-  fun properCovers(A: Annotation?): Boolean {
-    return if (A == null) false else this.properCovers(A.startOffset, A.endOffset)
+  fun properCovers(ann: Annotation?): Boolean {
+    return if (ann == null) false else this.properCovers(ann.startOffset, ann.endOffset)
   }
 
   /**
@@ -154,26 +155,24 @@ class Annotation(val type: AnnotationType,
    * Compares annotation offsets
    *
    * @return 0 is the two annotations have the same span, -1 if **this** comes first
-   * (starts or ends before A), and -1 if A comes first.
+   * (starts or ends before A), and -1 if ann comes first.
    */
-  fun compareSpan(A: Annotation?): Int {
-    if (A == null) throw NullPointerException()
-    return compareSpan(A.startOffset, A.endOffset)
+  fun compareSpan(ann: Annotation?): Int {
+    if (ann == null) throw NullPointerException()
+    return compareSpan(ann.startOffset, ann.endOffset)
   }
 
   /**
    * Compares annotation offsets
    *
    * @return 0 is the two annotations have the same span, -1 if **this** comes first (starts or
-   * ends before A), and -1 if A comes first.
+   * ends before ann), and -1 if ann comes first.
    */
+  @Suppress("ReturnCount")
   fun compareSpan(startOffset: Int, endOffset: Int): Int {
-    if (this.startOffset < startOffset) return -1
-    if (this.startOffset > startOffset) return 1
-
-    // the start offsets are equal
-    if (this.endOffset < endOffset) return -1
-    return if (this.endOffset > endOffset) 1 else 0
+    if (this.startOffset < startOffset || this.endOffset < endOffset) return -1
+    if (this.startOffset > startOffset || this.endOffset > endOffset) return 1
+    return 0
   }
 
   /**
@@ -182,6 +181,7 @@ class Annotation(val type: AnnotationType,
    * @param other the other annotation
    * @return -1, 1, 0 (used for comparison algos)
    */
+  @Suppress("ReturnCount")
   fun compareTo(other: Annotation?): Int {
     if (other == null) throw NullPointerException()
     val spanCompare = this.compareSpan(other)
