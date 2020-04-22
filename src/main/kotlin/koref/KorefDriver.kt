@@ -1,5 +1,6 @@
 package koref
 
+import koref.preprocessors.Tokenizer
 import koref.utils.SystemConfig
 
 fun getOpts(args: Array<String>): Map<String, List<String>> {
@@ -16,6 +17,17 @@ fun getOpts(args: Array<String>): Map<String, List<String>> {
 }
 
 /**
+ * Run the selected preprocessors over the selected data sets.
+ */
+fun preprocess(config: SystemConfig) {
+  println("Preprocessors to run: ${config.getPreprocessors()}")
+  if ("preprocessor" in config.getPreprocessors()) {
+    val tokenizer = Tokenizer()
+    tokenizer.run()
+  }
+}
+
+/**
  * The main driver for the koref backend.
  */
 fun main(args: Array<String>) {
@@ -25,4 +37,5 @@ fun main(args: Array<String>) {
 
   println("This is the Koref System")
   println("Am I configured: " + if (config.isInitialized) "Yes" else "No")
+
 }

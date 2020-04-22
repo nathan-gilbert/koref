@@ -1,5 +1,6 @@
 package koref.utils
 
+import koref.preprocess
 import java.io.File
 
 data class SystemConfigDto(
@@ -10,7 +11,8 @@ data class SystemConfigDto(
     val testDataDir: String,
     val testFileList: String,
     var tuneDataDir: String?,
-    var tuneFileList: String?
+    var tuneFileList: String?,
+    val preprocessors: ArrayList<String>
 )
 
 class SystemConfig(settingsFile: String?) {
@@ -69,9 +71,8 @@ class SystemConfig(settingsFile: String?) {
     return emptyList()
   }
 
-  fun getWorkingDir(): String {
-    return config.workingDir
-  }
+  fun getWorkingDir(): String = config.workingDir
+  fun getPreprocessors(): ArrayList<String> = config.preprocessors
 
   private fun readFileAsLines(fileName: String): List<String> = File(fileName).useLines { it.toList() }
 }

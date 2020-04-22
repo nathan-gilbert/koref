@@ -1,0 +1,9 @@
+# Default settings file for Koref system
+baseDataDir: /Users/nathan/Documents/Data/coreference/muc6
+workingDir: /Users/nathan/Projects/koref
+trainDataDir: muc6-train
+trainFileList: muc6.train.filelist
+testDataDir: muc6-test
+testFileList: muc6.test.filelist
+preprocessors:
+  - tokenizer

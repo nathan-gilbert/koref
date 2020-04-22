@@ -4,4 +4,9 @@ package koref.preprocessors
  * TODO
  *
  */
-open class Preprocessor
+interface Preprocessor {
+  /**
+   * Run the preprocessor
+   */
+  fun run()
+}

@@ -6,9 +6,16 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.io.File
+
+
+
 
 class SystemConfigTest {
-  companion object;
+  companion object {
+    private val resourcesDirectory = File("src/test/resources").absolutePath
+    private val testSettings = "$resourcesDirectory/test-settings.yml"
+  }
 
   @Test
   fun `SystemConfig handles not finding settings file`() {
@@ -25,14 +32,14 @@ class SystemConfigTest {
 
   @Test
   fun `SystemConfig opens the default settings file`() {
-    val config = SystemConfig(null)
+    val config = SystemConfig(testSettings)
     assertTrue(config.isInitialized)
   }
 
   @Test
   fun `SystemConfigDto contains correct directories`() {
     val dataDirCount = 4
-    val config = SystemConfig(null)
+    val config = SystemConfig(testSettings)
     assertThat(config.getDataDirs().keys.size).isEqualTo(dataDirCount)
     config.setTuneDataDir("some-tuning-dir")
     assertThat(config.getDataDirs()["tune"]).isEqualTo("some-tuning-dir")
@@ -40,13 +47,13 @@ class SystemConfigTest {
 
   @Test
   fun `SystemConfig has working directory set`() {
-    val config = SystemConfig(null)
+    val config = SystemConfig(testSettings)
     assertThat(config.getWorkingDir()).isNotNull()
   }
 
   @Test
   fun `SystemConfig handles file lists`() {
-    val config = SystemConfig(null)
+    val config = SystemConfig(testSettings)
     val testFiles = 30
     assertThat(config.getTestingFiles().size).isEqualTo(testFiles)
     val trainFiles = 30
@@ -57,5 +64,11 @@ class SystemConfigTest {
     config.setTuneFileList("muc6.train.filelist")
     tuneFiles = 30
     assertThat(config.getTuningFiles().size).isEqualTo(tuneFiles)
+  }
+
+  @Test
+  fun `SystemConfig handles preprocessor list`() {
+    val config = SystemConfig(testSettings)
+    assertThat(config.getPreprocessors().size).isEqualTo(1)
   }
 }

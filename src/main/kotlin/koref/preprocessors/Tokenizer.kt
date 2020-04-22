@@ -1,3 +1,8 @@
 package koref.preprocessors
 
-class Tokenizer : Preprocessor()
+class Tokenizer : Preprocessor {
+  override fun run() {
+    TODO("Not yet implemented")
+  }
+
+}
