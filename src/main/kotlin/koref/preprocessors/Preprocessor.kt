@@ -9,4 +9,9 @@ interface Preprocessor {
    * Run the preprocessor
    */
   fun run()
+
+  /**
+   *
+   */
+  fun writeAnnotationsToFile()
 }

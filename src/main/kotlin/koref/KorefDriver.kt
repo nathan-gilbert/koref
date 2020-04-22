@@ -1,6 +1,6 @@
 package koref
 
-import koref.preprocessors.Tokenizer
+import koref.preprocessors.tokenizers.Tokenizer
 import koref.utils.SystemConfig
 
 fun getOpts(args: Array<String>): Map<String, List<String>> {
