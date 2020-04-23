@@ -1,9 +1,21 @@
 package koref
 
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
+import koref.utils.SystemConfig
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import org.mockito.Mockito
+import java.io.File
 
 class KorefDriverTest {
+  companion object {
+    private val resourcesDirectory = File("src/test/resources").absolutePath
+    private val testSettingsNoPre = "$resourcesDirectory/test-settings-no-preprocessors.yml"
+    private val testSettingsOtherPre = "$resourcesDirectory/test-settings-other-preprocessors.yml"
+  }
+
   @Test
   fun `KorefDriver does not throw exception`() {
     assertDoesNotThrow { main(arrayOf()) }
@@ -22,5 +34,26 @@ class KorefDriverTest {
   @Test
   fun `KorefDriver handles malformed arguments`() {
     assertDoesNotThrow { main(arrayOf("s", "blah")) }
+  }
+
+  @Test
+  fun `KorefDriver handles config being uninitialized`() {
+    assertDoesNotThrow { main(arrayOf("-s", "this-doesnt-exist.yml")) }
+  }
+
+  @Test
+  fun `KorefDriver handles no preprocessors`() {
+    assertDoesNotThrow { main(
+        arrayOf("-s", testSettingsNoPre)
+    ) }
+  }
+
+  @Test
+  fun `KorefDriver handles other preprocessors`() {
+    assertDoesNotThrow {
+      main(
+          arrayOf("-s", testSettingsOtherPre)
+      )
+    }
   }
 }

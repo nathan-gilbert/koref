@@ -13,12 +13,12 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 
 ## Short term TODO
 
-* Fix tests to pass on new install, currently looking for files on my machines
 * Process raw text files and create tokens preprocessor.
 * Use the reuters directory for SGML processing
 * Process MUC documents and create tokens, raw text. 
 * Process ACE documents and create tokens, raw text.
 * Create part of speech, paragraphs, sentences tokens
+* Figure out mocking objects (SystemConfig)
 
 ## Roadmap to 1.0
 
