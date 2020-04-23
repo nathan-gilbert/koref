@@ -17,6 +17,10 @@ object YamlParser {
   }
 
   fun <T : Any> parseDto(fileName: String, dto: KClass<T>): T {
-    return Files.newBufferedReader(FileSystems.getDefault().getPath(fileName)).use { mapper.readValue(it, dto.java) }
+    return Files.newBufferedReader(
+        FileSystems
+            .getDefault()
+            .getPath(fileName)
+    ).use { mapper.readValue(it, dto.java) }
   }
 }

@@ -1,7 +1,10 @@
 package koref
 
+import koref.preprocessors.PreprocessorType
+import koref.preprocessors.tokenizers.SimpleWhiteSpace
 import koref.preprocessors.tokenizers.Tokenizer
 import koref.utils.SystemConfig
+import kotlin.system.exitProcess
 
 fun getOpts(args: Array<String>): Map<String, List<String>> {
   var last = ""
@@ -21,8 +24,8 @@ fun getOpts(args: Array<String>): Map<String, List<String>> {
  */
 fun preprocess(config: SystemConfig) {
   println("Preprocessors to run: ${config.getPreprocessors()}")
-  if ("preprocessor" in config.getPreprocessors()) {
-    val tokenizer = Tokenizer()
+  if ("tokenizer" in config.getPreprocessors()) {
+    val tokenizer = SimpleWhiteSpace()
     tokenizer.run()
   }
 }
@@ -38,4 +41,9 @@ fun main(args: Array<String>) {
   println("This is the Koref System")
   println("Am I configured: " + if (config.isInitialized) "Yes" else "No")
 
+  if (!config.isInitialized)
+    exitProcess(1)
+
+  if (config.getPreprocessors().size > 0)
+    preprocess(config)
 }

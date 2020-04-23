@@ -23,7 +23,7 @@ class SystemConfig(settingsFile: String?) {
   init {
     // check that option was passed in
     var sFile = settingsFile
-    if (sFile == null) {
+    if (sFile == null || sFile.isBlank()) {
       sFile = "settings.yml"
     }
 

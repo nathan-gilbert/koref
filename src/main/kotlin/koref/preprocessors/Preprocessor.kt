@@ -1,5 +1,9 @@
 package koref.preprocessors
 
+enum class PreprocessorType {
+  UNKNOWN, TOKENIZER
+}
+
 /**
  * TODO
  *
