@@ -2,6 +2,7 @@ package koref.preprocessors
 
 import koref.utils.SystemConfig
 import java.io.File
+import java.nio.file.Path
 
 enum class PreprocessorType {
   UNKNOWN, TOKENIZER
@@ -13,7 +14,7 @@ enum class PreprocessorType {
  */
 abstract class Preprocessor(protected val config: SystemConfig) {
   abstract val annotationName: String
-  protected val annotations = ArrayList<Annotation>()
+  val annotations = ArrayList<Annotation>()
 
   /**
    * Run the preprocessor
@@ -23,10 +24,10 @@ abstract class Preprocessor(protected val config: SystemConfig) {
   /**
    * Write the annotation set to file
    *
-   * @param outFile - fully qualified filename for output
+   * @param outDir - directory to write file
    */
-  fun writeAnnotationsToFile(outFile: String) {
-    File(outFile).bufferedWriter().use {
+  fun writeAnnotationsToFile(outDir: Path) {
+    File("${outDir.toString()}/$annotationName").bufferedWriter().use {
       out -> annotations.forEach { out.write(it.toString()) }
     }
   }

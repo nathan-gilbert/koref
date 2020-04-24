@@ -4,7 +4,10 @@ import koref.utils.SystemConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
 
 internal class SimpleWhiteSpaceTest {
   companion object {
@@ -15,10 +18,16 @@ internal class SimpleWhiteSpaceTest {
 
   @Test
   fun getAnnotations() {
+    val sws = SimpleWhiteSpace("tokens", config)
+    assertThat(sws.annotations.size).isEqualTo(0)
   }
 
   @Test
-  fun writeAnnotationsToFile() {
+  fun writeAnnotationsToFile(@TempDir tempDir: Path) {
+    val sws = SimpleWhiteSpace("tokens", config)
+    sws.writeAnnotationsToFile(tempDir)
+    val annotationFile = tempDir.resolve("tokens")
+    assertThat(Files.exists(annotationFile)).isEqualTo(true)
   }
 
   @Test
