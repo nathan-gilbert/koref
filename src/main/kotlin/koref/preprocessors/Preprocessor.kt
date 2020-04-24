@@ -11,7 +11,7 @@ enum class PreprocessorType {
  * TODO
  *
  */
-abstract class Preprocessor(protected  val config: SystemConfig) {
+abstract class Preprocessor(protected val config: SystemConfig) {
   abstract val annotationName: String
   protected val annotations = ArrayList<Annotation>()
 
