@@ -4,4 +4,8 @@ package koref.data
  * TODO
  *
  */
-open class Document
+abstract class Document(val name: String) {
+  val annotations = mutableMapOf<String, ArrayList<Annotation>>()
+  abstract fun getText(): String
+}
+

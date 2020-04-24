@@ -1,11 +1,9 @@
 package koref.preprocessors.tokenizers
 
-class SimpleWhiteSpace : Tokenizer {
+import koref.utils.SystemConfig
+
+class SimpleWhiteSpace(override val annotationName: String, config: SystemConfig) : Tokenizer(config) {
   override fun run() {
     println("${SimpleWhiteSpace::class.simpleName}-> I'm running!!")
-  }
-
-  override fun writeAnnotationsToFile() {
-    TODO("Not yet implemented")
   }
 }

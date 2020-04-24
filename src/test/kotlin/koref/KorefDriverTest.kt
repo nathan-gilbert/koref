@@ -1,12 +1,7 @@
 package koref
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import koref.utils.SystemConfig
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.mockito.Mockito
 import java.io.File
 
 class KorefDriverTest {

@@ -1,5 +1,6 @@
 package koref.preprocessors.tokenizers
 
 import koref.preprocessors.Preprocessor
+import koref.utils.SystemConfig
 
-interface Tokenizer : Preprocessor
+abstract class Tokenizer(config: SystemConfig) : Preprocessor(config)
