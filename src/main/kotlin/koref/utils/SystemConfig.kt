@@ -52,6 +52,10 @@ class SystemConfig(settingsFile: String?) {
     return dataDirs
   }
 
+  fun getTrainingDir(): String = config.trainDataDir
+  fun getTestingDir(): String = config.testDataDir
+  fun getTuningDir(): String? = config.tuneDataDir
+
   fun getTrainingFiles(): List<String> {
     val inFile = "${config.baseDataDir}/${config.trainDataDir}/${config.trainFileList}"
     return readFileAsLines(inFile)

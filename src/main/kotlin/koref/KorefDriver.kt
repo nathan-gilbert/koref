@@ -23,7 +23,7 @@ fun preprocess(config: SystemConfig) {
   println("Preprocessors to run: ${config.getPreprocessors()}")
   if ("tokenizer" in config.getPreprocessors()) {
     val tokenizer = SimpleWhiteSpace("tokens", config)
-    tokenizer.run()
+    tokenizer.runTrain()
   }
 }
 

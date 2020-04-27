@@ -31,7 +31,7 @@ internal class SimpleWhiteSpaceTest {
   }
 
   @Test
-  fun run() {
+  fun `run train`() {
     val sws = SimpleWhiteSpace("tokens", config)
     assertDoesNotThrow { sws.run() }
   }

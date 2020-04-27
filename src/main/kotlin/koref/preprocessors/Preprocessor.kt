@@ -19,7 +19,17 @@ abstract class Preprocessor(protected val config: SystemConfig) {
   /**
    * Run the preprocessor
    */
-  abstract fun run()
+  abstract fun runTrain()
+
+  /**
+   *
+   */
+  abstract fun runTest()
+
+  /**
+   *
+   */
+  abstract fun runTuning()
 
   /**
    * Write the annotation set to file
