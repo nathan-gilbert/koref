@@ -43,6 +43,9 @@ class SystemConfigTest {
     assertThat(config.getDataDirs().keys.size).isEqualTo(dataDirCount)
     config.setTuneDataDir("some-tuning-dir")
     assertThat(config.getDataDirs()["tune"]).isEqualTo("some-tuning-dir")
+    assertThat(config.getTuningDir()).isEqualTo("some-tuning-dir")
+    assertThat(config.getTrainingDir()).isEqualTo("muc6-train")
+    assertThat(config.getTestingDir()).isEqualTo("muc6-test")
   }
 
   @Test

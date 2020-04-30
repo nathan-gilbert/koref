@@ -1,6 +1,7 @@
 package koref.preprocessors
 
 import koref.utils.SystemConfig
+import koref.data.Annotation
 import java.io.File
 import java.nio.file.Path
 
@@ -32,12 +33,21 @@ abstract class Preprocessor(protected val config: SystemConfig) {
   abstract fun runTuning()
 
   /**
+   * Add an annotation to this preprocessor
+   *
+   * @param ann -- annotation to add
+   */
+  fun addAnnotation(ann: Annotation) {
+    annotations.add(ann)
+  }
+
+  /**
    * Write the annotation set to file
    *
    * @param outDir - directory to write file
    */
   fun writeAnnotationsToFile(outDir: Path) {
-    File("${outDir.toString()}/$annotationName").bufferedWriter().use {
+    File("${outDir}/$annotationName").bufferedWriter().use {
       out -> annotations.forEach { out.write(it.toString()) }
     }
   }

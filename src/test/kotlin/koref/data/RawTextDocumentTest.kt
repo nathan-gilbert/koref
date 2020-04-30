@@ -51,7 +51,6 @@ internal class RawTextDocumentTest {
   @Test
   fun `read from no file`() {
     val rawText = RawTextDocument("myTest")
-
     assertThrows<FileNotFoundException> {
       rawText.readRawTextFile("noFile")
     }

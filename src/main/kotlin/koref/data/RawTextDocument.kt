@@ -6,8 +6,7 @@ class RawTextDocument(name: String, rawText: String? = null) : Document(name) {
   private var text = rawText ?: ""
 
   fun readRawTextFile(inFile: String) {
-    val lines = File(inFile).bufferedReader().readLines()
-    text = lines.joinToString()
+    text = File(inFile).readText()
   }
 
   override fun getText():String {
