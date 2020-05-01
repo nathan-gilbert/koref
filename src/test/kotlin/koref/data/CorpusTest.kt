@@ -12,7 +12,8 @@ internal class CorpusTest {
   }
 
   @Test
-  fun ``() {
-    
+  fun `get corpus files`() {
+    val corpus = Corpus("brown", listOf("file1"))
+    assertThat(corpus.files.size).isEqualTo(1)
   }
 }
