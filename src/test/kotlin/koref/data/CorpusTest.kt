@@ -6,8 +6,13 @@ import org.assertj.core.api.Assertions.assertThat
 internal class CorpusTest {
 
   @Test
-  fun getName() {
-    val corpus = Corpus("brown")
+  fun `get corpus name`() {
+    val corpus = Corpus("brown", listOf(""))
     assertThat(corpus.name).isEqualTo("brown")
+  }
+
+  @Test
+  fun ``() {
+    
   }
 }

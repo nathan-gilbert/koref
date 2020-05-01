@@ -1,5 +1,6 @@
 package koref
 
+import koref.data.Corpus
 import koref.preprocessors.tokenizers.SimpleWhiteSpace
 import koref.utils.SystemConfig
 
@@ -19,12 +20,18 @@ fun getOpts(args: Array<String>): Map<String, List<String>> {
 /**
  * Run the selected preprocessors over the selected data sets.
  */
-fun preprocess(config: SystemConfig) {
+fun preprocess(corpus: Corpus, config: SystemConfig) {
   println("Preprocessors to run: ${config.getPreprocessors()}")
   if ("tokenizer" in config.getPreprocessors()) {
-    val tokenizer = SimpleWhiteSpace("tokens", config)
+    val tokenizer = SimpleWhiteSpace("tokens", config, corpus.docs)
     tokenizer.runTrain()
   }
+}
+
+fun getCorpus(config: SystemConfig): Corpus {
+  val corpus = Corpus("training", config.getTrainingFiles())
+  corpus.createDocuments()
+  return corpus
 }
 
 /**
@@ -38,5 +45,8 @@ fun main(args: Array<String>) {
   println("This is the Koref System")
   println("Am I configured: " + if (config.isInitialized) "Yes" else "No")
 
-  if (config.isInitialized && config.getPreprocessors().size > 0) preprocess(config)
+  if (config.isInitialized) {
+    val corpus = getCorpus(config)
+    if(config.getPreprocessors().size > 0) preprocess(corpus, config)
+  }
 }

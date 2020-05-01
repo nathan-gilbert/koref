@@ -1,8 +1,13 @@
 package koref.preprocessors.tokenizers
 
+import koref.data.Document
 import koref.utils.SystemConfig
 
-class SimpleWhiteSpace(override val annotationName: String, config: SystemConfig) : Tokenizer(config) {
+class SimpleWhiteSpace(override val annotationName: String,
+                       config: SystemConfig,
+                       files: ArrayList<Document>)
+  : Tokenizer(config, files) {
+
   override fun runTrain() {
     if ("tokenizer" in config.getPreprocessors())
       config.getTrainingFiles().forEach {

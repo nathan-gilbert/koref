@@ -2,6 +2,7 @@ package koref.preprocessors
 
 import koref.utils.SystemConfig
 import koref.data.Annotation
+import koref.data.Document
 import java.io.File
 
 enum class PreprocessorType {
@@ -12,7 +13,7 @@ enum class PreprocessorType {
  * TODO
  *
  */
-abstract class Preprocessor(protected val config: SystemConfig) {
+abstract class Preprocessor(protected val config: SystemConfig, protected val files: ArrayList<Document>) {
   abstract val annotationName: String
   val annotations = ArrayList<Annotation>()
 

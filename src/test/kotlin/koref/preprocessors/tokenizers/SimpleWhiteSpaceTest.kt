@@ -2,6 +2,7 @@ package koref.preprocessors.tokenizers
 
 import koref.data.Annotation
 import koref.data.AnnotationType
+import koref.data.Document
 import koref.utils.SystemConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
@@ -23,13 +24,13 @@ internal class SimpleWhiteSpaceTest {
 
   @Test
   fun `get the annotations`() {
-    val sws = SimpleWhiteSpace("tokens", config)
+    val sws = SimpleWhiteSpace("tokens", config, arrayListOf())
     assertThat(sws.annotations.size).isEqualTo(0)
   }
 
   @Test
   fun `write annotations to file`(@TempDir tempDir: Path) {
-    val sws = SimpleWhiteSpace("tokens", config)
+    val sws = SimpleWhiteSpace("tokens", config, arrayListOf())
     sws.addAnnotation(ann)
     assertThat(sws.annotations.size).isEqualTo(1)
     sws.writeAnnotationsToFile(tempDir.toString())
@@ -43,13 +44,13 @@ internal class SimpleWhiteSpaceTest {
 
   @Test
   fun `run train`() {
-    val sws = SimpleWhiteSpace("tokens", config)
+    val sws = SimpleWhiteSpace("tokens", config, arrayListOf())
     assertDoesNotThrow { sws.runTrain() }
   }
 
   @Test
   fun `run test`() {
-    val sws = SimpleWhiteSpace("tokens", config)
+    val sws = SimpleWhiteSpace("tokens", config, arrayListOf())
     assertDoesNotThrow { sws.runTest() }
   }
 
@@ -58,7 +59,7 @@ internal class SimpleWhiteSpaceTest {
     val newConfig = config
     newConfig.setTuneDataDir("muc6-train")
     newConfig.setTuneFileList("muc6.train.filelist")
-    val sws = SimpleWhiteSpace("tokens", newConfig)
+    val sws = SimpleWhiteSpace("tokens", newConfig, arrayListOf())
     assertDoesNotThrow { sws.runTuning() }
   }
 
@@ -66,7 +67,7 @@ internal class SimpleWhiteSpaceTest {
   fun `run no tokenizers`() {
     val newConfig = config
     newConfig.getPreprocessors().remove("tokenizer")
-    val sws = SimpleWhiteSpace("tokens", newConfig)
+    val sws = SimpleWhiteSpace("tokens", newConfig, arrayListOf())
     assertDoesNotThrow { sws.runTrain() }
     assertDoesNotThrow { sws.runTest() }
     assertDoesNotThrow { sws.runTuning() }
@@ -74,7 +75,7 @@ internal class SimpleWhiteSpaceTest {
 
   @Test
   fun `get annotation name`() {
-    val sws = SimpleWhiteSpace("tokens", config)
+    val sws = SimpleWhiteSpace("tokens", config, arrayListOf())
     assertThat(sws.annotationName).isEqualTo("tokens")
   }
 }
