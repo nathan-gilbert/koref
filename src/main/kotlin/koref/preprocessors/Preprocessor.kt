@@ -3,7 +3,6 @@ package koref.preprocessors
 import koref.utils.SystemConfig
 import koref.data.Annotation
 import java.io.File
-import java.nio.file.Path
 
 enum class PreprocessorType {
   UNKNOWN, TOKENIZER
@@ -46,8 +45,8 @@ abstract class Preprocessor(protected val config: SystemConfig) {
    *
    * @param outDir - directory to write file
    */
-  fun writeAnnotationsToFile(outDir: Path) {
-    File("${outDir}/$annotationName").bufferedWriter().use {
+  fun writeAnnotationsToFile(outDir: String) {
+    File("$outDir/${this.annotationName}").bufferedWriter().use {
       out -> annotations.forEach { out.write(it.toString()) }
     }
   }

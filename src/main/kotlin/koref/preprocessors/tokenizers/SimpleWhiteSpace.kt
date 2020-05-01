@@ -11,10 +11,16 @@ class SimpleWhiteSpace(override val annotationName: String, config: SystemConfig
   }
 
   override fun runTest() {
-    TODO("Not yet implemented")
+    if ("tokenizer" in config.getPreprocessors())
+      config.getTestingFiles().forEach {
+        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTestingDir()}/$it!")
+      }
   }
 
   override fun runTuning() {
-    TODO("Not yet implemented")
+    if ("tokenizer" in config.getPreprocessors())
+      config.getTuningFiles().forEach {
+        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTuningDir()}/$it!")
+      }
   }
 }

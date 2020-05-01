@@ -2,15 +2,11 @@ package koref
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import java.nio.file.Path
 
 class KorefDriverTest {
-  companion object {
-    private val resourcesDirectory = File("src/test/resources").absolutePath
-    private val testSettingsNoPre = "$resourcesDirectory/test-settings-no-preprocessors.yml"
-    private val testSettingsOtherPre = "$resourcesDirectory/test-settings-other-preprocessors.yml"
-  }
-
   @Test
   fun `KorefDriver does not throw exception`() {
     assertDoesNotThrow { main(arrayOf()) }
@@ -37,17 +33,35 @@ class KorefDriverTest {
   }
 
   @Test
-  fun `KorefDriver handles no preprocessors`() {
+  fun `KorefDriver handles no preprocessors`(@TempDir tempDir: Path) {
+    val tempFile = File(tempDir.toString(), "test-settings-no-preprocessors.yml")
+    tempFile.writeText("""baseDataDir: /Users/nathan/Documents/Data/coreference/muc6
+workingDir: /Users/nathan/Projects/koref
+trainDataDir: muc6-train
+trainFileList: muc6.train.filelist
+testDataDir: muc6-test
+testFileList: muc6.test.filelist""")
+
     assertDoesNotThrow { main(
-        arrayOf("-s", testSettingsNoPre)
+        arrayOf("-s", tempFile.absolutePath)
     ) }
   }
 
   @Test
-  fun `KorefDriver handles other preprocessors`() {
+  fun `KorefDriver handles other preprocessors`(@TempDir tempDir: Path) {
+    val tempFile = File(tempDir.toString(), "test-settings-other-preprocessors.yml")
+    tempFile.writeText("""baseDataDir: /Users/nathan/Documents/Data/coreference/muc6
+workingDir: /Users/nathan/Projects/koref
+trainDataDir: muc6-train
+trainFileList: muc6.train.filelist
+testDataDir: muc6-test
+testFileList: muc6.test.filelist
+preprocessors:
+  - other
+    """)
     assertDoesNotThrow {
       main(
-          arrayOf("-s", testSettingsOtherPre)
+          arrayOf("-s", tempFile.absolutePath)
       )
     }
   }

@@ -14,7 +14,7 @@ internal class RawTextDocumentTest {
     private const val text = "This is my test document."
     private val resourcesDirectory = File("src/test/resources").absolutePath
     private val sampleFile = "$resourcesDirectory/sample.txt"
-    private val sampleText = "This is a test sample."
+    private const val sampleText = "This is a test sample."
   }
 
   @Test

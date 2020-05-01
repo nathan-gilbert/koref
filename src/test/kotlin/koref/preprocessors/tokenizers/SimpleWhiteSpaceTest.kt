@@ -6,8 +6,10 @@ import koref.utils.SystemConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import java.io.FileNotFoundException
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -30,9 +32,13 @@ internal class SimpleWhiteSpaceTest {
     val sws = SimpleWhiteSpace("tokens", config)
     sws.addAnnotation(ann)
     assertThat(sws.annotations.size).isEqualTo(1)
-    sws.writeAnnotationsToFile(tempDir)
+    sws.writeAnnotationsToFile(tempDir.toString())
     val annotationFile = tempDir.resolve("tokens")
     assertThat(Files.exists(annotationFile)).isEqualTo(true)
+
+    assertThrows<FileNotFoundException> {
+      sws.writeAnnotationsToFile("/some/dir/that/doesnt/exist")
+    }
   }
 
   @Test
@@ -43,10 +49,27 @@ internal class SimpleWhiteSpaceTest {
 
   @Test
   fun `run test`() {
+    val sws = SimpleWhiteSpace("tokens", config)
+    assertDoesNotThrow { sws.runTest() }
+  }
+
+  @Test
+  fun `run tuning`() {
+    val newConfig = config
+    newConfig.setTuneDataDir("muc6-train")
+    newConfig.setTuneFileList("muc6.train.filelist")
+    val sws = SimpleWhiteSpace("tokens", newConfig)
+    assertDoesNotThrow { sws.runTuning() }
+  }
+
+  @Test
+  fun `run no tokenizers`() {
     val newConfig = config
     newConfig.getPreprocessors().remove("tokenizer")
     val sws = SimpleWhiteSpace("tokens", newConfig)
     assertDoesNotThrow { sws.runTrain() }
+    assertDoesNotThrow { sws.runTest() }
+    assertDoesNotThrow { sws.runTuning() }
   }
 
   @Test
