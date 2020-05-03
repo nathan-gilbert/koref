@@ -52,6 +52,7 @@ class SystemConfig(settingsFile: String?) {
     return dataDirs
   }
 
+  fun getBaseDataDir(): String = config.baseDataDir
   fun getTrainingDir(): String = config.trainDataDir
   fun getTestingDir(): String = config.testDataDir
   fun getTuningDir(): String? = config.tuneDataDir

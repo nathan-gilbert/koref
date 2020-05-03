@@ -2,11 +2,12 @@ package koref.data
 
 import java.io.File
 
-class RawTextDocument(name: String, rawText: String? = null) : Document(name) {
-  private var text = rawText ?: ""
+class RawTextDocument(fileDir: String, baseDir: String, rawText: String? = null) : Document(fileDir, baseDir) {
+  private val rawTextFileName = "raw.txt"
+  private val text = rawText ?: readRawTextFile("$fileDir${File.separator}$rawTextFileName")
 
-  fun readRawTextFile(inFile: String) {
-    text = File(inFile).readText()
+  private fun readRawTextFile(inFile: String): String {
+    return File("$baseDir${File.separator}$inFile").readText()
   }
 
   override fun getText():String {

@@ -26,14 +26,14 @@ class SimpleWhiteSpace(override val annotationName: String,
    * @param doc - the document to tokenize
    */
   override fun tokenize(doc: Document) {
-    val tokens = doc.getText().split("\\s+".toRegex())
-    val annotations = ArrayList<Annotation>()
+    val tokens = doc.getText().split("\\s".toRegex())
     tokens.forEach {
       val start = getStartOffset(doc, it)
       annotations.add(Annotation(AnnotationType.TOKEN, start, start+it.length, it))
     }
 
     doc.annotations[AnnotationType.TOKEN] = annotations
+    writeAnnotationsToFile(doc.getDocumentDirectory())
     resetOffset()
   }
 
@@ -43,15 +43,16 @@ class SimpleWhiteSpace(override val annotationName: String,
   override fun runTrain() {
     if ("tokenizer" in config.getPreprocessors())
       files.forEach {
-        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTrainingDir()}/$it!")
+        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTrainingDir()}/${it.name}!")
         tokenize(it)
+        annotations.clear()
       }
   }
 
   override fun runTest() {
     if ("tokenizer" in config.getPreprocessors())
       files.forEach {
-        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTestingDir()}/$it!")
+        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTestingDir()}/${it.name}!")
         tokenize(it)
       }
   }
@@ -59,7 +60,7 @@ class SimpleWhiteSpace(override val annotationName: String,
   override fun runTuning() {
     if ("tokenizer" in config.getPreprocessors())
       files.forEach {
-        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTuningDir()}/$it!")
+        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTuningDir()}/${it.name}!")
         tokenize(it)
       }
   }

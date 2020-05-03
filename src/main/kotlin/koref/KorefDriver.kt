@@ -3,6 +3,8 @@ package koref
 import koref.data.Corpus
 import koref.preprocessors.tokenizers.SimpleWhiteSpace
 import koref.utils.SystemConfig
+import java.io.File
+import java.nio.file.Path
 
 fun getOpts(args: Array<String>): Map<String, List<String>> {
   var last = ""
@@ -29,7 +31,8 @@ fun preprocess(corpus: Corpus, config: SystemConfig) {
 }
 
 fun getCorpus(config: SystemConfig): Corpus {
-  val corpus = Corpus("training", config.getTrainingFiles())
+  val baseDir = "${config.getBaseDataDir()}${File.separator}${config.getTrainingDir()}"
+  val corpus = Corpus("training", baseDir, config.getTrainingFiles())
   corpus.createDocuments()
   return corpus
 }
