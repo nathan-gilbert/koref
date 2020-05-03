@@ -26,13 +26,13 @@ internal class SimpleWhiteSpaceTest {
 
   @Test
   fun `get the annotations`() {
-    val sws = SimpleWhiteSpace("tokens", config, arrayListOf())
+    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
     assertThat(sws.annotations.size).isEqualTo(0)
   }
 
   @Test
   fun `write annotations to file`(@TempDir tempDir: Path) {
-    val sws = SimpleWhiteSpace("tokens", config, arrayListOf())
+    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
     sws.addAnnotation(ann)
     assertThat(sws.annotations.size).isEqualTo(1)
     sws.writeAnnotationsToFile(tempDir.toString())
@@ -84,8 +84,11 @@ internal class SimpleWhiteSpaceTest {
     assertThat(sws.annotationName).isEqualTo("tokens")
   }
 
-  /*
   @Test
-  fun `run tokenize`() { }
-  */
+  fun `run tokenize`() {
+    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
+    sws.tokenize(doc)
+    assertThat(doc.annotations.size).isEqualTo(1)
+    assertThat(doc.annotations[AnnotationType.TOKEN]?.size).isEqualTo(3)
+  }
 }
