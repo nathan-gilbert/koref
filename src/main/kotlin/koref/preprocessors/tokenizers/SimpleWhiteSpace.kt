@@ -34,7 +34,7 @@ class SimpleWhiteSpace(override val annotationName: String,
     }
 
     doc.annotations[AnnotationType.TOKEN] = annotations
-    currentOffset = 0
+    resetOffset()
   }
 
   /**
@@ -62,5 +62,9 @@ class SimpleWhiteSpace(override val annotationName: String,
         println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTuningDir()}/$it!")
         tokenize(it)
       }
+  }
+
+  private fun resetOffset() {
+    currentOffset = 0
   }
 }

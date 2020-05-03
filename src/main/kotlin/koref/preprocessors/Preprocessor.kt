@@ -10,15 +10,17 @@ enum class PreprocessorType {
 }
 
 /**
- * TODO
- *
+ * Preprocessor
+ * @property config
+ * @property files
  */
 abstract class Preprocessor(protected val config: SystemConfig, protected val files: ArrayList<Document>) {
   abstract val annotationName: String
   val annotations = ArrayList<Annotation>()
+  private val annotationDir = "annotations"
 
   /**
-   * Run the preprocessor
+   * Run the preprocessor on the training documents
    */
   abstract fun runTrain()
 
@@ -33,7 +35,8 @@ abstract class Preprocessor(protected val config: SystemConfig, protected val fi
   abstract fun runTuning()
 
   /**
-   *
+   * @param doc
+   * @param text
    */
   abstract fun getStartOffset(doc: Document, text: String): Int
 
@@ -52,7 +55,7 @@ abstract class Preprocessor(protected val config: SystemConfig, protected val fi
    * @param outDir - directory to write file
    */
   fun writeAnnotationsToFile(outDir: String) {
-    File("$outDir/${this.annotationName}").bufferedWriter().use {
+    File("$outDir/$annotationDir/${this.annotationName}").bufferedWriter().use {
       out -> annotations.forEach { out.write(it.toString()) }
     }
   }

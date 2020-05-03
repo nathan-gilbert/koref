@@ -78,4 +78,9 @@ internal class SimpleWhiteSpaceTest {
     val sws = SimpleWhiteSpace("tokens", config, arrayListOf())
     assertThat(sws.annotationName).isEqualTo("tokens")
   }
+
+  /*
+  @Test
+  fun `run tokenize`() { }
+  */
 }
