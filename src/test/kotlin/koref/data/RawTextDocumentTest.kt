@@ -12,8 +12,6 @@ import java.nio.file.Path
 internal class RawTextDocumentTest {
   companion object {
     private const val text = "This is my test document."
-    private val resourcesDirectory = File("src/test/resources").absolutePath
-    private val sampleFile = "$resourcesDirectory/sample.txt"
     private const val sampleText = "This is a test sample."
   }
 
@@ -42,9 +40,11 @@ internal class RawTextDocumentTest {
   }
 
   @Test
-  fun `read from file`() {
+  fun `read from file`(@TempDir tempDir: Path) {
+    val tempFile = File(tempDir.toString(), "sample.txt")
+    tempFile.writeText(sampleText)
     val rawText = RawTextDocument("myTest")
-    rawText.readRawTextFile(sampleFile)
+    rawText.readRawTextFile(tempFile.absolutePath)
     assertThat(rawText.getText()).contains(sampleText)
   }
 
