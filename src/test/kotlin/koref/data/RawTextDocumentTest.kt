@@ -22,12 +22,6 @@ internal class RawTextDocumentTest {
   }
 
   @Test
-  fun `get document text when null`() {
-    val rawText = RawTextDocument("myTest")
-    assertThat(rawText.getText()).isEqualTo("")
-  }
-
-  @Test
   fun `get raw document text`() {
     val rawText = RawTextDocument("myTest", text)
     assertThat(rawText.getText()).isEqualTo(text)
@@ -43,25 +37,15 @@ internal class RawTextDocumentTest {
   fun `read from file`(@TempDir tempDir: Path) {
     val tempFile = File(tempDir.toString(), "sample.txt")
     tempFile.writeText(sampleText)
-    val rawText = RawTextDocument("myTest")
-    rawText.readRawTextFile(tempFile.absolutePath)
+    val rawText = RawTextDocument(tempDir.toAbsolutePath().toString(), ".")
     assertThat(rawText.getText()).contains(sampleText)
   }
 
   @Test
   fun `read from no file`() {
-    val rawText = RawTextDocument("myTest")
     assertThrows<FileNotFoundException> {
-      rawText.readRawTextFile("noFile")
+      RawTextDocument("/some/dir","myTest")
     }
   }
 
-  @Test
-  fun `read empty file`(@TempDir tempDir: Path) {
-    val tempFile = File(tempDir.toString(), "tmp.txt")
-    tempFile.writeText("")
-    val rawText = RawTextDocument("myTest")
-    rawText.readRawTextFile(tempFile.absolutePath)
-    assertThat(rawText.getText()).contains("")
-  }
 }
