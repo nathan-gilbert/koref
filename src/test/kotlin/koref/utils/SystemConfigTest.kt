@@ -12,11 +12,6 @@ import java.io.File
 
 
 class SystemConfigTest {
-  companion object {
-    private val resourcesDirectory = File("src/test/resources").absolutePath
-    private val testSettings = "$resourcesDirectory/test-settings.yml"
-  }
-
   @Test
   fun `SystemConfig handles not finding settings file`() {
     val config = SystemConfig(settingsFile = "myFile.yml")
