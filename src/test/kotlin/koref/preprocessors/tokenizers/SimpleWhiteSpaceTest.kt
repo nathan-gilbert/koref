@@ -17,11 +17,18 @@ import java.nio.file.Path
 
 internal class SimpleWhiteSpaceTest {
   companion object {
-    private val resourcesDirectory = File("src/test/resources").absolutePath
-    private val testSettings = "$resourcesDirectory/test-settings.yml"
+    private const val testSettings = """baseDataDir: /Users/nathan/Documents/Data/coreference/muc6
+workingDir: /Users/nathan/Projects/koref
+trainDataDir: muc6-train
+trainFileList: muc6.train.filelist
+testDataDir: muc6-test
+testFileList: muc6.test.filelist
+preprocessors:
+  - tokenizer
+"""
     private val config = SystemConfig(testSettings)
     private val ann = Annotation(AnnotationType.TOKEN, 0, 3, "test")
-    private val doc = RawTextDocument("test", "My Test Document")
+    private val doc = RawTextDocument("", "")
   }
 
   @Test

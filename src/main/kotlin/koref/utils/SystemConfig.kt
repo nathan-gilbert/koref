@@ -32,6 +32,10 @@ class SystemConfig(settingsFile: String?) {
     if (fileExists) {
       config = YamlParser.parseDto(sFile, SystemConfigDto::class)
       isInitialized = true
+    } else {
+      //try to parse the string that was passed in
+      config = YamlParser.parseDtoFromString(sFile, SystemConfigDto::class)
+      isInitialized = true
     }
   }
 
