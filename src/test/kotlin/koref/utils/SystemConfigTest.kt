@@ -64,7 +64,7 @@ preprocessors:
     val tempSettingsFile = File(tempDir.toString(), "test-settings.yml")
     tempSettingsFile.writeText(testSettingsStr)
     val config = SystemConfig(tempSettingsFile.absolutePath)
-    assertThat(config.getWorkingDir()).isNotNull
+    assertThat(config.getWorkingDir()).isEqualTo("/Users/nathan/Projects/koref")
   }
 
   @Test

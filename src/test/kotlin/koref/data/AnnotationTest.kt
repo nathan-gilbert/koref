@@ -30,8 +30,20 @@ internal class AnnotationTest {
   fun `creates proper string representation`() {
     val ann = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
     val annStr = ann.toString()
-    val expectStr = "Annotation: id=${ann.id}; type=${ann.type}; start=${ann.startOffset}; end=${ann.endOffset}"
+    val expectStr = "Annotation: id=${ann.id}; type=${ann.type}; start=${ann.startOffset}; end=${ann.endOffset}; " +
+        "content=${ann.content}"
     assertThat(annStr).isEqualTo(expectStr)
+  }
+
+  @Test
+  fun `creates proper json representation`() {
+    val ann = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
+    val annId = ann.id
+    val jsonStr = ann.toJson()
+    val expectStr = "{\"type\":\"SENTENCE\",\"startOffset\":0,\"endOffset\":14,\"content\":\"My sample text\"," +
+        "\"id\":\"$annId\",\"features\":{},\"cleanContent\":\"My sample text\"," +
+        "\"tokens\":[\"My\",\"sample\",\"text\"],\"length\":14}"
+    assertThat(jsonStr).isEqualTo(expectStr)
   }
 
   @Test

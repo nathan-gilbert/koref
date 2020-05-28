@@ -1,5 +1,6 @@
 package koref.data
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import koref.data.AnnotationType.PHRASE
 import koref.data.AnnotationType.POS
 import koref.data.AnnotationType.SENTENCE
@@ -57,7 +58,12 @@ class Annotation(
     get() = endOffset - startOffset
 
   override fun toString(): String {
-    return ("Annotation: id=$id; type=$type; start=$startOffset; end=$endOffset")
+    return ("Annotation: id=$id; type=$type; start=$startOffset; end=$endOffset; content=$content")
+  }
+
+  fun toJson(): String {
+    val mapper = jacksonObjectMapper()
+    return mapper.writeValueAsString(this)
   }
 
   override fun equals(other: Any?): Boolean {
