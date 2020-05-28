@@ -3,6 +3,7 @@ package koref.preprocessors.tokenizers
 import koref.data.Annotation
 import koref.data.AnnotationType
 import koref.data.RawTextDocument
+import koref.preprocessors.PreprocessorType
 import koref.utils.SystemConfig
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
@@ -27,6 +28,12 @@ preprocessors:
     private val config = SystemConfig(testSettings)
     private val ann = Annotation(AnnotationType.TOKEN, 0, 3, "test")
     private val doc = RawTextDocument("0", "/Users/nathan/Documents/Data/raw/example")
+  }
+
+  @Test
+  fun `get the type`() {
+    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
+    assertThat(sws.type).isEqualTo(PreprocessorType.TOKENIZER)
   }
 
   @Test
