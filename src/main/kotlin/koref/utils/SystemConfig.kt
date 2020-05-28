@@ -1,5 +1,6 @@
 package koref.utils
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import java.io.File
 
 data class SystemConfigDto(
@@ -14,28 +15,25 @@ data class SystemConfigDto(
     val preprocessors: ArrayList<String>?
 )
 
-class SystemConfig(settingsFile: String?) {
+class SystemConfig(settingsFile: String) {
   private lateinit var config: SystemConfigDto
   var isInitialized: Boolean = false
     private set
 
   init {
-    // check that option was passed in
-    var sFile = settingsFile
-    if (sFile == null || sFile.isBlank()) {
-      sFile = "settings.yml"
-    }
-
     // check if file actually exists
-    val file = File(sFile)
+    val file = File(settingsFile)
     val fileExists = file.exists()
     if (fileExists) {
-      config = YamlParser.parseDto(sFile, SystemConfigDto::class)
+      config = YamlParser.parseDto(settingsFile, SystemConfigDto::class)
       isInitialized = true
     } else {
-      //try to parse the string that was passed in
-      config = YamlParser.parseDtoFromString(sFile, SystemConfigDto::class)
-      isInitialized = true
+      try {
+        //try to parse the string that was passed in
+        config = YamlParser.parseDtoFromString(settingsFile, SystemConfigDto::class)
+        isInitialized = true
+      } catch (e: MismatchedInputException) {
+      }
     }
   }
 

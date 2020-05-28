@@ -35,12 +35,12 @@ class KorefDriverTest {
   @Test
   fun `KorefDriver handles no preprocessors`(@TempDir tempDir: Path) {
     val tempFile = File(tempDir.toString(), "test-settings-no-preprocessors.yml")
-    tempFile.writeText("""baseDataDir: /Users/nathan/Documents/Data/coreference/muc6
+    tempFile.writeText("""baseDataDir: /Users/nathan/Documents/Data/raw/example
 workingDir: /Users/nathan/Projects/koref
-trainDataDir: muc6-train
-trainFileList: muc6.train.filelist
-testDataDir: muc6-test
-testFileList: muc6.test.filelist""")
+trainDataDir: .
+trainFileList: example.train.filelist
+testDataDir: .
+testFileList: example.test.filelist""")
 
     assertDoesNotThrow { main(
         arrayOf("-s", tempFile.absolutePath)
@@ -50,12 +50,12 @@ testFileList: muc6.test.filelist""")
   @Test
   fun `KorefDriver handles other preprocessors`(@TempDir tempDir: Path) {
     val tempFile = File(tempDir.toString(), "test-settings-other-preprocessors.yml")
-    tempFile.writeText("""baseDataDir: /Users/nathan/Documents/Data/coreference/muc6
+    tempFile.writeText("""baseDataDir: /Users/nathan/Documents/Data/raw/example
 workingDir: /Users/nathan/Projects/koref
-trainDataDir: muc6-train
-trainFileList: muc6.train.filelist
-testDataDir: muc6-test
-testFileList: muc6.test.filelist
+trainDataDir: .
+trainFileList: example.train.filelist
+testDataDir: .
+testFileList: example.test.filelist
 preprocessors:
   - other
     """)

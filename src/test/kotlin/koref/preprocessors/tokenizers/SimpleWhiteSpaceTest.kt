@@ -2,33 +2,31 @@ package koref.preprocessors.tokenizers
 
 import koref.data.Annotation
 import koref.data.AnnotationType
-import koref.data.Document
 import koref.data.RawTextDocument
 import koref.utils.SystemConfig
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.io.TempDir
-import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
 import java.nio.file.Path
 
 internal class SimpleWhiteSpaceTest {
   companion object {
-    private const val testSettings = """baseDataDir: /Users/nathan/Documents/Data/coreference/muc6
+    private const val testSettings = """baseDataDir: /Users/nathan/Documents/Data/raw/example
 workingDir: /Users/nathan/Projects/koref
-trainDataDir: muc6-train
-trainFileList: muc6.train.filelist
-testDataDir: muc6-test
-testFileList: muc6.test.filelist
+trainDataDir: .
+trainFileList: example.train.filelist
+testDataDir: .
+testFileList: example.test.filelist
 preprocessors:
   - tokenizer
 """
     private val config = SystemConfig(testSettings)
     private val ann = Annotation(AnnotationType.TOKEN, 0, 3, "test")
-    private val doc = RawTextDocument("", "")
+    private val doc = RawTextDocument("0", "/Users/nathan/Documents/Data/raw/example")
   }
 
   @Test
@@ -69,8 +67,8 @@ preprocessors:
   @Test
   fun `run tuning`() {
     val newConfig = config
-    newConfig.setTuneDataDir("muc6-train")
-    newConfig.setTuneFileList("muc6.train.filelist")
+    newConfig.setTuneDataDir("0")
+    newConfig.setTuneFileList("example.train.filelist")
     val sws = SimpleWhiteSpace("tokens", newConfig, arrayListOf(doc))
     assertDoesNotThrow { sws.runTuning() }
   }
@@ -96,6 +94,6 @@ preprocessors:
     val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
     sws.tokenize(doc)
     assertThat(doc.annotations.size).isEqualTo(1)
-    assertThat(doc.annotations[AnnotationType.TOKEN]?.size).isEqualTo(3)
+    assertThat(doc.annotations[AnnotationType.TOKEN]?.size).isEqualTo(291)
   }
 }

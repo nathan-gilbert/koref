@@ -1,12 +1,7 @@
 package koref.data
 
 import java.io.File
-import java.nio.file.Path
 
-/**
- * TODO
- *
- */
 abstract class Document(val name: String, val baseDir: String) {
   val annotations = mutableMapOf<AnnotationType, ArrayList<Annotation>>()
   abstract fun getText(): String

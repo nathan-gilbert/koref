@@ -6,12 +6,23 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.io.TempDir
 import java.io.File
-
-
-
+import java.nio.file.Path
 
 class SystemConfigTest {
+  companion object {
+    private const val testSettingsStr = """baseDataDir: /Users/nathan/Documents/Data/coreference/muc6
+workingDir: /Users/nathan/Projects/koref
+trainDataDir: muc6-train
+trainFileList: muc6.train.filelist
+testDataDir: muc6-test
+testFileList: muc6.test.filelist
+preprocessors:
+  - tokenizer
+"""
+  }
+
   @Test
   fun `SystemConfig handles not finding settings file`() {
     val config = SystemConfig(settingsFile = "myFile.yml")
@@ -26,15 +37,20 @@ class SystemConfigTest {
   }
 
   @Test
-  fun `SystemConfig opens the default settings file`() {
-    val config = SystemConfig(testSettings)
+  fun `SystemConfig opens the default settings file`(@TempDir tempDir: Path) {
+    val tempSettingsFile = File(tempDir.toString(), "test-settings.yml")
+    tempSettingsFile.writeText(testSettingsStr)
+
+    val config = SystemConfig(tempSettingsFile.absolutePath)
     assertTrue(config.isInitialized)
   }
 
   @Test
-  fun `SystemConfigDto contains correct directories`() {
+  fun `SystemConfigDto contains correct directories`(@TempDir tempDir: Path) {
+    val tempSettingsFile = File(tempDir.toString(), "test-settings.yml")
+    tempSettingsFile.writeText(testSettingsStr)
     val dataDirCount = 4
-    val config = SystemConfig(testSettings)
+    val config = SystemConfig(tempSettingsFile.absolutePath)
     assertThat(config.getDataDirs().keys.size).isEqualTo(dataDirCount)
     config.setTuneDataDir("some-tuning-dir")
     assertThat(config.getDataDirs()["tune"]).isEqualTo("some-tuning-dir")
@@ -44,14 +60,18 @@ class SystemConfigTest {
   }
 
   @Test
-  fun `SystemConfig has working directory set`() {
-    val config = SystemConfig(testSettings)
-    assertThat(config.getWorkingDir()).isNotNull()
+  fun `SystemConfig has working directory set`(@TempDir tempDir: Path) {
+    val tempSettingsFile = File(tempDir.toString(), "test-settings.yml")
+    tempSettingsFile.writeText(testSettingsStr)
+    val config = SystemConfig(tempSettingsFile.absolutePath)
+    assertThat(config.getWorkingDir()).isNotNull
   }
 
   @Test
-  fun `SystemConfig handles file lists`() {
-    val config = SystemConfig(testSettings)
+  fun `SystemConfig handles file lists`(@TempDir tempDir: Path) {
+    val tempSettingsFile = File(tempDir.toString(), "test-settings.yml")
+    tempSettingsFile.writeText(testSettingsStr)
+    val config = SystemConfig(tempSettingsFile.absolutePath)
     val testFiles = 30
     assertThat(config.getTestingFiles().size).isEqualTo(testFiles)
     val trainFiles = 30
@@ -65,8 +85,10 @@ class SystemConfigTest {
   }
 
   @Test
-  fun `SystemConfig handles preprocessor list`() {
-    val config = SystemConfig(testSettings)
+  fun `SystemConfig handles preprocessor list`(@TempDir tempDir: Path) {
+    val tempSettingsFile = File(tempDir.toString(), "test-settings.yml")
+    tempSettingsFile.writeText(testSettingsStr)
+    val config = SystemConfig(tempSettingsFile.absolutePath)
     assertThat(config.getPreprocessors().size).isEqualTo(1)
   }
 }

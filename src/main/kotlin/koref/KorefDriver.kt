@@ -4,7 +4,6 @@ import koref.data.Corpus
 import koref.preprocessors.tokenizers.SimpleWhiteSpace
 import koref.utils.SystemConfig
 import java.io.File
-import java.nio.file.Path
 
 fun getOpts(args: Array<String>): Map<String, List<String>> {
   var last = ""
@@ -42,7 +41,7 @@ fun getCorpus(config: SystemConfig): Corpus {
  */
 fun main(args: Array<String>) {
   val opts = getOpts(args)
-  val settingsFile = opts.getOrDefault("-s", listOf()).firstOrNull()
+  val settingsFile = opts.getOrDefault("-s", listOf()).firstOrNull() ?: "settings.yml"
   val config = SystemConfig(settingsFile)
 
   println("This is the Koref System")
