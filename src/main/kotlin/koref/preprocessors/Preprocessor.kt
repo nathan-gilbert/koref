@@ -56,8 +56,9 @@ abstract class Preprocessor(protected val config: SystemConfig, protected val fi
    * @param outDir - directory to write file
    */
   fun writeAnnotationsToFile(outDir: String) {
-    if (!File("$outDir/$annotationDir").exists())
+    if (!File("$outDir/$annotationDir").exists()) {
       File("$outDir/$annotationDir").mkdir()
+    }
     File("$outDir/$annotationDir/${this.annotationName}").printWriter().use {
       out -> annotations.forEach { out.println(it.toString()) }
     }

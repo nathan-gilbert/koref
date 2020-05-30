@@ -16,6 +16,7 @@ data class SystemConfigDto(
     val modelDirectory: String?
 )
 
+@Suppress("TooManyFunctions", "EmptyCatchBlock")
 class SystemConfig(settingsFile: String) {
   private lateinit var config: SystemConfigDto
   var isInitialized: Boolean = false
@@ -33,8 +34,7 @@ class SystemConfig(settingsFile: String) {
         // try to parse the string that was passed in
         config = YamlParser.parseDtoFromString(settingsFile, SystemConfigDto::class)
         isInitialized = true
-      } catch (e: MismatchedInputException) {
-      }
+      } catch (e: MismatchedInputException) { /* TODO add logging here */ }
     }
   }
 
