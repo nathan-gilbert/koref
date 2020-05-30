@@ -1,7 +1,7 @@
 package koref
 
 import koref.data.Corpus
-import koref.preprocessors.tokenizers.SimpleWhiteSpace
+import koref.preprocessors.tokenizers.WhiteSpaceTokenizer
 import koref.utils.SystemConfig
 import java.io.File
 
@@ -24,7 +24,7 @@ fun getOpts(args: Array<String>): Map<String, List<String>> {
 fun preprocess(corpus: Corpus, config: SystemConfig) {
   println("Preprocessors to run: ${config.getPreprocessors()}")
   if ("tokenizer" in config.getPreprocessors()) {
-    val tokenizer = SimpleWhiteSpace("tokens", config, corpus.docs)
+    val tokenizer = WhiteSpaceTokenizer("tokens", config, corpus.docs)
     tokenizer.runTrain()
   }
 }

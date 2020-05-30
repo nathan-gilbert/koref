@@ -5,7 +5,7 @@ import koref.data.AnnotationType
 import koref.data.Document
 import koref.utils.SystemConfig
 
-class SimpleWhiteSpace(
+class WhiteSpaceTokenizer(
     override val annotationName: String,
     config: SystemConfig,
     files: ArrayList<Document>
@@ -45,7 +45,7 @@ class SimpleWhiteSpace(
   override fun runTrain() {
     if ("tokenizer" in config.getPreprocessors())
       files.forEach {
-        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTrainingDir()}/${it.name}!")
+        println("${WhiteSpaceTokenizer::class.simpleName}-> I'm running in ${config.getTrainingDir()}/${it.name}!")
         run(it)
         annotations.clear()
       }
@@ -54,7 +54,7 @@ class SimpleWhiteSpace(
   override fun runTest() {
     if ("tokenizer" in config.getPreprocessors())
       files.forEach {
-        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTestingDir()}/${it.name}!")
+        println("${WhiteSpaceTokenizer::class.simpleName}-> I'm running in ${config.getTestingDir()}/${it.name}!")
         run(it)
       }
   }
@@ -62,7 +62,7 @@ class SimpleWhiteSpace(
   override fun runTuning() {
     if ("tokenizer" in config.getPreprocessors())
       files.forEach {
-        println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTuningDir()}/${it.name}!")
+        println("${WhiteSpaceTokenizer::class.simpleName}-> I'm running in ${config.getTuningDir()}/${it.name}!")
         run(it)
       }
   }

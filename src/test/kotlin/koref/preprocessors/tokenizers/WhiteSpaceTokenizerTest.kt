@@ -14,7 +14,7 @@ import java.io.FileNotFoundException
 import java.nio.file.Files
 import java.nio.file.Path
 
-internal class SimpleWhiteSpaceTest {
+internal class WhiteSpaceTokenizerTest {
   companion object {
     private const val testSettings = """baseDataDir: /Users/nathan/Documents/Data/raw/example
 workingDir: /Users/nathan/Projects/koref
@@ -32,19 +32,19 @@ preprocessors:
 
   @Test
   fun `get the type`() {
-    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
+    val sws = WhiteSpaceTokenizer("tokens", config, arrayListOf(doc))
     assertThat(sws.type).isEqualTo(PreprocessorType.TOKENIZER)
   }
 
   @Test
   fun `get the annotations`() {
-    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
+    val sws = WhiteSpaceTokenizer("tokens", config, arrayListOf(doc))
     assertThat(sws.annotations.size).isEqualTo(0)
   }
 
   @Test
   fun `write annotations to file`(@TempDir tempDir: Path) {
-    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
+    val sws = WhiteSpaceTokenizer("tokens", config, arrayListOf(doc))
     sws.addAnnotation(ann)
     assertThat(sws.annotations.size).isEqualTo(1)
     sws.writeAnnotationsToFile(tempDir.toString())
@@ -61,13 +61,13 @@ preprocessors:
 
   @Test
   fun `run train`() {
-    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
+    val sws = WhiteSpaceTokenizer("tokens", config, arrayListOf(doc))
     assertDoesNotThrow { sws.runTrain() }
   }
 
   @Test
   fun `run test`() {
-    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
+    val sws = WhiteSpaceTokenizer("tokens", config, arrayListOf(doc))
     assertDoesNotThrow { sws.runTest() }
   }
 
@@ -76,7 +76,7 @@ preprocessors:
     val newConfig = config
     newConfig.setTuneDataDir("0")
     newConfig.setTuneFileList("example.train.filelist")
-    val sws = SimpleWhiteSpace("tokens", newConfig, arrayListOf(doc))
+    val sws = WhiteSpaceTokenizer("tokens", newConfig, arrayListOf(doc))
     assertDoesNotThrow { sws.runTuning() }
   }
 
@@ -84,7 +84,7 @@ preprocessors:
   fun `run no tokenizers`() {
     val newConfig = config
     newConfig.getPreprocessors().remove("tokenizer")
-    val sws = SimpleWhiteSpace("tokens", newConfig, arrayListOf(doc))
+    val sws = WhiteSpaceTokenizer("tokens", newConfig, arrayListOf(doc))
     assertDoesNotThrow { sws.runTrain() }
     assertDoesNotThrow { sws.runTest() }
     assertDoesNotThrow { sws.runTuning() }
@@ -92,13 +92,13 @@ preprocessors:
 
   @Test
   fun `get annotation name`() {
-    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
+    val sws = WhiteSpaceTokenizer("tokens", config, arrayListOf(doc))
     assertThat(sws.annotationName).isEqualTo("tokens")
   }
 
   @Test
   fun `run tokenize`() {
-    val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
+    val sws = WhiteSpaceTokenizer("tokens", config, arrayListOf(doc))
     sws.run(doc)
     assertThat(doc.annotations.size).isEqualTo(1)
     assertThat(doc.annotations[AnnotationType.TOKEN]?.size).isEqualTo(291)
