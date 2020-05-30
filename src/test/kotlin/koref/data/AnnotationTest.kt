@@ -41,7 +41,7 @@ internal class AnnotationTest {
     val annId = ann.id
     val jsonStr = ann.toJson()
     val expectStr = "{\"type\":\"SENTENCE\",\"startOffset\":0,\"endOffset\":14,\"content\":\"My sample text\"," +
-        "\"id\":\"$annId\",\"features\":{},\"cleanContent\":\"My sample text\"," +
+        "\"id\":\"$annId\",\"features\":{},\"properties\":{},\"cleanContent\":\"My sample text\"," +
         "\"tokens\":[\"My\",\"sample\",\"text\"],\"length\":14}"
     assertThat(jsonStr).isEqualTo(expectStr)
   }
@@ -203,5 +203,15 @@ internal class AnnotationTest {
     val ann2 = ann1
     assertThat(ann1 == ann2).isEqualTo(true)
     assertThat(ann1.hashCode()).isEqualTo(ann2.hashCode())
+  }
+
+  @Test
+  fun `set properties`() {
+    val ann = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
+    ann.properties["my prop"] = 1
+    assertThat(ann.properties.keys.size).isEqualTo(1)
+
+    ann.properties = mutableMapOf("my other prop" to 2.0)
+    assertThat(ann.properties.keys.size).isEqualTo(1)
   }
 }

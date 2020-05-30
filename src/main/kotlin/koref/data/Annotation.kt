@@ -37,6 +37,7 @@ enum class AnnotationType {
  * @param content the textual content of the annotation
  * @property id a uuid of the annotation
  * @property features the data science related features for this annotation
+ * @property properties additional data that may be of interest for this annotation
  * @property tokens array of words from the textual content
  * @property cleanContent cleaned up text content (spaces, newlines stripped)
  * @property length the length of the annotation is the bytespan length
@@ -52,6 +53,7 @@ class Annotation(
 
   val id: UUID = UUID.randomUUID()
   var features: MutableMap<String, String?> = mutableMapOf()
+  var properties: MutableMap<String, Any?> = mutableMapOf()
   val cleanContent: String = content.replace("\n", "")
   val tokens: List<String> = content.split(" ")
   val length: Int
