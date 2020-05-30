@@ -39,34 +39,6 @@ class WhiteSpaceTokenizer(
     resetOffset()
   }
 
-  override fun runTrain() {
-    if ("tokenizer" in config.getPreprocessors()) {
-      files.forEach {
-        println("${WhiteSpaceTokenizer::class.simpleName}-> I'm running in ${config.getTrainingDir()}/${it.name}!")
-        run(it)
-        annotations.clear()
-      }
-    }
-  }
-
-  override fun runTest() {
-    if ("tokenizer" in config.getPreprocessors()) {
-      files.forEach {
-        println("${WhiteSpaceTokenizer::class.simpleName}-> I'm running in ${config.getTestingDir()}/${it.name}!")
-        run(it)
-      }
-    }
-  }
-
-  override fun runTuning() {
-    if ("tokenizer" in config.getPreprocessors()) {
-      files.forEach {
-        println("${WhiteSpaceTokenizer::class.simpleName}-> I'm running in ${config.getTuningDir()}/${it.name}!")
-        run(it)
-      }
-    }
-  }
-
   private fun resetOffset() {
     currentOffset = 0
   }

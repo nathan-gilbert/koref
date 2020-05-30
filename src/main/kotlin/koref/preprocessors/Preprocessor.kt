@@ -20,19 +20,8 @@ abstract class Preprocessor(protected val config: SystemConfig, protected val fi
   val annotations = ArrayList<Annotation>()
   private val annotationDir = "annotations"
 
-  /**
-   * Run the preprocessor on the training documents
-   */
   abstract fun runTrain()
-
-  /**
-   *
-   */
   abstract fun runTest()
-
-  /**
-   *
-   */
   abstract fun runTuning()
 
   /**

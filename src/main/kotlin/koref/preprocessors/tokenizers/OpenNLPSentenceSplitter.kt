@@ -1,5 +1,7 @@
 package koref.preprocessors.tokenizers
 
+import koref.data.Annotation
+import koref.data.AnnotationType
 import koref.data.Document
 import koref.utils.SystemConfig
 import java.io.File
@@ -22,19 +24,11 @@ class OpenNLPSentenceSplitter(override val annotationName: String,
   }
 
   override fun run(doc: Document) {
-    TODO("Not yet implemented")
-  }
-
-  override fun runTrain() {
-    TODO("Not yet implemented")
-  }
-
-  override fun runTest() {
-    TODO("Not yet implemented")
-  }
-
-  override fun runTuning() {
-    TODO("Not yet implemented")
+    val sentences = splitter.sentDetect(doc.getText())
+    sentences.forEach {
+      val spans = splitter.sentPosDetect(it.toString())
+      annotations.add(Annotation(AnnotationType.SENTENCE, spans[0].start, spans[0].end, it.toString()))
+    }
   }
 
   override fun getStartOffset(doc: Document, text: String): Int {
