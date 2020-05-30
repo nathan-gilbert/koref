@@ -5,13 +5,14 @@ import koref.utils.SystemConfig
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
+import opennlp.tools.sentdetect.SentenceDetectorME
+import opennlp.tools.sentdetect.SentenceModel
 
 class OpenNLPSentenceSplitter(override val annotationName: String,
                        config: SystemConfig,
                        files: ArrayList<Document>)
   : Tokenizer(config, files) {
 
-  /*
   private var splitter: SentenceDetectorME
 
   init {
@@ -19,7 +20,6 @@ class OpenNLPSentenceSplitter(override val annotationName: String,
     val model = SentenceModel(modelIn)
     splitter = SentenceDetectorME(model)
   }
- */
 
   override fun run(doc: Document) {
     TODO("Not yet implemented")
