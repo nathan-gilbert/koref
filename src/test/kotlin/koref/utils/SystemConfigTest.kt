@@ -57,6 +57,7 @@ preprocessors:
     assertThat(config.getTuningDir()).isEqualTo("some-tuning-dir")
     assertThat(config.getTrainingDir()).isEqualTo("muc6-train")
     assertThat(config.getTestingDir()).isEqualTo("muc6-test")
+    assertThat(config.getModelDir()).isEqualTo("")
   }
 
   @Test

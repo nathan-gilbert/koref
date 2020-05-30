@@ -4,34 +4,36 @@ import koref.data.Annotation
 import koref.data.AnnotationType
 import koref.data.Document
 import koref.utils.SystemConfig
+import opennlp.tools.sentdetect.SentenceDetectorME
+import opennlp.tools.sentdetect.SentenceModel
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
-import opennlp.tools.sentdetect.SentenceDetectorME
-import opennlp.tools.sentdetect.SentenceModel
 
-class OpenNLPSentenceSplitter(override val annotationName: String,
-                       config: SystemConfig,
-                       files: ArrayList<Document>)
-  : Tokenizer(config, files) {
+class OpenNLPSentenceSplitter(
+    override val annotationName: String,
+    config: SystemConfig,
+    files: ArrayList<Document>
+) :
+    Tokenizer(config, files) {
 
   private var splitter: SentenceDetectorME
 
   init {
-    val modelIn: InputStream = FileInputStream("${config.getModelDirectory()}${File.separator}en-sent.bin")
+    val modelLoc = "${config.getModelDir()}${File.separator}en-sent.bin"
+    val modelIn: InputStream = FileInputStream(modelLoc)
     val model = SentenceModel(modelIn)
     splitter = SentenceDetectorME(model)
   }
 
   override fun run(doc: Document) {
     val sentences = splitter.sentDetect(doc.getText())
-    sentences.forEach {
-      val spans = splitter.sentPosDetect(it.toString())
-      annotations.add(Annotation(AnnotationType.SENTENCE, spans[0].start, spans[0].end, it.toString()))
+    val spans = splitter.sentPosDetect(doc.getText())
+    sentences.forEachIndexed { index, element ->
+      annotations.add(Annotation(AnnotationType.SENTENCE, spans[index].start, spans[index].end, element.toString()))
     }
-  }
 
-  override fun getStartOffset(doc: Document, text: String): Int {
-    TODO("Not yet implemented")
+    doc.annotations[AnnotationType.SENTENCE] = annotations
+    writeAnnotationsToFile(doc.getDocumentDirectory())
   }
 }

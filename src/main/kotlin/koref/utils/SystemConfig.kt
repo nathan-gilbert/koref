@@ -13,7 +13,7 @@ data class SystemConfigDto(
     var tuneDataDir: String?,
     var tuneFileList: String?,
     val preprocessors: ArrayList<String>?,
-    val modelDirectory: String?
+    val modelDir: String?
 )
 
 @Suppress("TooManyFunctions", "EmptyCatchBlock")
@@ -80,7 +80,7 @@ class SystemConfig(settingsFile: String) {
 
   fun getWorkingDir(): String = config.workingDir
   fun getPreprocessors(): ArrayList<String> = config.preprocessors ?: arrayListOf()
-  fun getModelDirectory(): String = config.modelDirectory ?: ""
+  fun getModelDir(): String = config.modelDir ?: ""
 
   private fun readFileAsLines(fileName: String): List<String> = File(fileName).useLines { it.toList() }
 }

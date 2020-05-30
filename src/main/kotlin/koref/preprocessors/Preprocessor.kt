@@ -25,12 +25,6 @@ abstract class Preprocessor(protected val config: SystemConfig, protected val fi
   abstract fun runTuning()
 
   /**
-   * @param doc
-   * @param text
-   */
-  abstract fun getStartOffset(doc: Document, text: String): Int
-
-  /**
    * Add an annotation to this preprocessor
    *
    * @param ann -- annotation to add

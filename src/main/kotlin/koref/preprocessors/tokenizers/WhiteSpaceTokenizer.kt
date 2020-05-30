@@ -9,20 +9,9 @@ class WhiteSpaceTokenizer(
     override val annotationName: String,
     config: SystemConfig,
     files: ArrayList<Document>
-) :
-  Tokenizer(config, files) {
+) : Tokenizer(config, files) {
 
   private var currentOffset = 0
-
-  /**
-   * @param doc
-   * @param text
-   */
-  override fun getStartOffset(doc: Document, text: String): Int {
-    val start = doc.getText().indexOf(text, currentOffset)
-    currentOffset = start + text.length
-    return start
-  }
 
   /**
    * @param doc - the document to tokenize
@@ -37,6 +26,16 @@ class WhiteSpaceTokenizer(
     doc.annotations[AnnotationType.TOKEN] = annotations
     writeAnnotationsToFile(doc.getDocumentDirectory())
     resetOffset()
+  }
+
+  /**
+   * @param doc
+   * @param text
+   */
+  private fun getStartOffset(doc: Document, text: String): Int {
+    val start = doc.getText().indexOf(text, currentOffset)
+    currentOffset = start + text.length
+    return start
   }
 
   private fun resetOffset() {
