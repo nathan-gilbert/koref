@@ -5,10 +5,12 @@ import koref.data.AnnotationType
 import koref.data.Document
 import koref.utils.SystemConfig
 
-class SimpleWhiteSpace(override val annotationName: String,
-                       config: SystemConfig,
-                       files: ArrayList<Document>)
-  : Tokenizer(config, files) {
+class SimpleWhiteSpace(
+    override val annotationName: String,
+    config: SystemConfig,
+    files: ArrayList<Document>
+) :
+  Tokenizer(config, files) {
 
   private var currentOffset = 0
 
@@ -25,11 +27,11 @@ class SimpleWhiteSpace(override val annotationName: String,
   /**
    * @param doc - the document to tokenize
    */
-  override fun tokenize(doc: Document) {
+  override fun run(doc: Document) {
     val tokens = doc.getText().split("\\s".toRegex())
     tokens.forEach {
       val start = getStartOffset(doc, it)
-      annotations.add(Annotation(AnnotationType.TOKEN, start, start+it.length, it))
+      annotations.add(Annotation(AnnotationType.TOKEN, start, start + it.length, it))
     }
 
     doc.annotations[AnnotationType.TOKEN] = annotations
@@ -44,7 +46,7 @@ class SimpleWhiteSpace(override val annotationName: String,
     if ("tokenizer" in config.getPreprocessors())
       files.forEach {
         println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTrainingDir()}/${it.name}!")
-        tokenize(it)
+        run(it)
         annotations.clear()
       }
   }
@@ -53,7 +55,7 @@ class SimpleWhiteSpace(override val annotationName: String,
     if ("tokenizer" in config.getPreprocessors())
       files.forEach {
         println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTestingDir()}/${it.name}!")
-        tokenize(it)
+        run(it)
       }
   }
 
@@ -61,7 +63,7 @@ class SimpleWhiteSpace(override val annotationName: String,
     if ("tokenizer" in config.getPreprocessors())
       files.forEach {
         println("${SimpleWhiteSpace::class.simpleName}-> I'm running in ${config.getTuningDir()}/${it.name}!")
-        tokenize(it)
+        run(it)
       }
   }
 

@@ -10,7 +10,7 @@ class RawTextDocument(fileDir: String, baseDir: String, rawText: String? = null)
     return File("$baseDir${File.separator}$inFile").readText()
   }
 
-  override fun getText():String {
+  override fun getText(): String {
     return text
   }
 }

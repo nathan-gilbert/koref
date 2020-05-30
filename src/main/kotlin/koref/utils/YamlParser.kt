@@ -24,7 +24,7 @@ object YamlParser {
     ).use { mapper.readValue(it, dto.java) }
   }
 
-  fun <T: Any> parseDtoFromString(parseThis: String, dto: KClass<T>): T {
+  fun <T : Any> parseDtoFromString(parseThis: String, dto: KClass<T>): T {
     return mapper.readValue(parseThis, dto.java)
   }
 }

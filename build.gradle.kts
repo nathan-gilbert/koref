@@ -27,6 +27,7 @@ dependencies {
   implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.+")
   implementation("org.jetbrains.kotlin:kotlin-reflect")
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+  implementation("org.apache.opennlp:opennlp:1.9.2")
   testImplementation("org.assertj:assertj-core:3.12.2")
   testImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
   testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")

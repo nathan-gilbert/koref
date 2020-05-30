@@ -12,7 +12,8 @@ data class SystemConfigDto(
     val testFileList: String,
     var tuneDataDir: String?,
     var tuneFileList: String?,
-    val preprocessors: ArrayList<String>?
+    val preprocessors: ArrayList<String>?,
+    val modelDirectory: String?
 )
 
 class SystemConfig(settingsFile: String) {
@@ -29,7 +30,7 @@ class SystemConfig(settingsFile: String) {
       isInitialized = true
     } else {
       try {
-        //try to parse the string that was passed in
+        // try to parse the string that was passed in
         config = YamlParser.parseDtoFromString(settingsFile, SystemConfigDto::class)
         isInitialized = true
       } catch (e: MismatchedInputException) {
@@ -79,6 +80,7 @@ class SystemConfig(settingsFile: String) {
 
   fun getWorkingDir(): String = config.workingDir
   fun getPreprocessors(): ArrayList<String> = config.preprocessors ?: arrayListOf()
+  fun getModelDirectory(): String = config.modelDirectory ?: ""
 
   private fun readFileAsLines(fileName: String): List<String> = File(fileName).useLines { it.toList() }
 }

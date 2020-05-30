@@ -99,7 +99,7 @@ preprocessors:
   @Test
   fun `run tokenize`() {
     val sws = SimpleWhiteSpace("tokens", config, arrayListOf(doc))
-    sws.tokenize(doc)
+    sws.run(doc)
     assertThat(doc.annotations.size).isEqualTo(1)
     assertThat(doc.annotations[AnnotationType.TOKEN]?.size).isEqualTo(291)
   }

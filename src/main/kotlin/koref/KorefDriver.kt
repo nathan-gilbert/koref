@@ -49,6 +49,6 @@ fun main(args: Array<String>) {
 
   if (config.isInitialized) {
     val corpus = getCorpus(config)
-    if(config.getPreprocessors().size > 0) preprocess(corpus, config)
+    if (config.getPreprocessors().size > 0) preprocess(corpus, config)
   }
 }

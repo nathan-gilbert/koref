@@ -7,4 +7,3 @@ abstract class Document(val name: String, val baseDir: String) {
   abstract fun getText(): String
   fun getDocumentDirectory(): String = "$baseDir${File.separator}$name"
 }
-
