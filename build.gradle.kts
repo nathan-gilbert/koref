@@ -28,6 +28,7 @@ dependencies {
   implementation("org.jetbrains.kotlin:kotlin-reflect")
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
   implementation("org.apache.opennlp:opennlp-tools:1.9.2")
+  implementation("edu.stanford.nlp:stanford-corenlp:4.0.0")
   testImplementation("org.assertj:assertj-core:3.12.2")
   testImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
   testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
