@@ -24,6 +24,18 @@ jobs:
     - name: Run gradle
       run: ./gradlew build
     
-    - name: Run tests
-      run: ./gradlew test
-      
+  lint:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Run linter
+        run: ./graldew detekt
+  
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    
+    steps:
+      - name: Run tests
+        run: ./gradlew test
