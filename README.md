@@ -13,10 +13,11 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 
 ## Short term TODO
 
+* Need to make tests runnable via the cloud
 * Add stanford sentences, tags, tests
 * Add logging
 * Use the reuters directory for SGML processing
-* Process MUC documents and create tokens, raw text. 
+* Process MUC documents and create tokens, raw text.
 * Process ACE documents and create tokens, raw text.
 * Create part of speech, paragraphs, dependency, grammar annotations
 
