@@ -21,11 +21,11 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Run gradle
+    - name: Compile
       run: ./gradlew compileKotlin
   
     - name: Run linter
-      run: ./graldew detekt
+      run: ./gradlew detekt
   
     - name: Run tests
       run: ./gradlew test
