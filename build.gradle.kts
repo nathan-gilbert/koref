@@ -69,11 +69,9 @@ tasks.withType<Test> {
   }
 }
 
-tasks {
-  withType<io.gitlab.arturbosch.detekt.Detekt> {
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
     // Target version of the generated JVM bytecode. It is used for type resolution.
     this.jvmTarget = "11"
-  }
 }
 
 tasks.jacocoTestReport {
