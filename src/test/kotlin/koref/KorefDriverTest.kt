@@ -35,7 +35,7 @@ class KorefDriverTest {
   @Test
   fun `KorefDriver handles no preprocessors`(@TempDir tempDir: Path) {
     val tempFile = File(tempDir.toString(), "test-settings-no-preprocessors.yml")
-    tempFile.writeText("""baseDataDir: /Users/nathan/Documents/Data/raw/example
+    tempFile.writeText("""baseDataDir: $tempDir
 workingDir: /Users/nathan/Projects/koref
 trainDataDir: .
 trainFileList: example.train.filelist
@@ -50,7 +50,7 @@ testFileList: example.test.filelist""")
   @Test
   fun `KorefDriver handles other preprocessors`(@TempDir tempDir: Path) {
     val tempFile = File(tempDir.toString(), "test-settings-other-preprocessors.yml")
-    tempFile.writeText("""baseDataDir: /Users/nathan/Documents/Data/raw/example
+    tempFile.writeText("""baseDataDir: $tempDir
 workingDir: /Users/nathan/Projects/koref
 trainDataDir: .
 trainFileList: example.train.filelist

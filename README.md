@@ -13,6 +13,7 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 
 ## Short term TODO
 
+- Need script to download models
 - Need to make tests runnable via the cloud
 - Add stanford sentences, tags, tests
 - Add logging
