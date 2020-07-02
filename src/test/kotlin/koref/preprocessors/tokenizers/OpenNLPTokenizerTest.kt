@@ -11,7 +11,7 @@ import java.nio.file.Path
 class OpenNLPSentenceTokenizerTest : KorefTests() {
 
   @Test
-  fun `test the type of tokenizer`(@TempDir tempDir: Path) {
+  fun `test tokenizer type`(@TempDir tempDir: Path) {
     val config = getConfig(tempDir)
     val doc = getRawTextDoc(tempDir.toString())
     val ot = OpenNLPTokenizer("tokens", config, arrayListOf(doc))
@@ -20,12 +20,11 @@ class OpenNLPSentenceTokenizerTest : KorefTests() {
 
   @Test
   fun `test run`(@TempDir tempDir: Path) {
+    val config = getConfig(tempDir)
     val doc = getRawTextDoc(tempDir.toString())
-    val ot = OpenNLPTokenizer("tokens",
-        getConfig(tempDir),
-        arrayListOf(doc))
+    val ot = OpenNLPTokenizer("tokens", config, arrayListOf(doc))
     ot.run(doc)
     Assertions.assertThat(doc.annotations.size).isEqualTo(1)
-    Assertions.assertThat(doc.annotations[AnnotationType.TOKEN]?.size).isEqualTo(321)
+    Assertions.assertThat(doc.annotations[AnnotationType.TOKEN]?.size).isEqualTo(6)
   }
 }
