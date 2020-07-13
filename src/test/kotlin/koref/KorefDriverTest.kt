@@ -1,12 +1,13 @@
 package koref
 
+import koref.utils.KorefTests
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import java.nio.file.Path
 
-class KorefDriverTest {
+class KorefDriverTest : KorefTests() {
   @Test
   fun `KorefDriver does not throw exception`() {
     assertDoesNotThrow { main(arrayOf()) }
@@ -38,9 +39,17 @@ class KorefDriverTest {
     tempFile.writeText("""baseDataDir: $tempDir
 workingDir: /Users/nathan/Projects/koref
 trainDataDir: .
-trainFileList: example.train.filelist
+trainFileList: train.filelist
 testDataDir: .
-testFileList: example.test.filelist""")
+testFileList: test.filelist""")
+    val tempFileDir = File(tempDir.toString() + File.separator + "0")
+    tempFileDir.mkdir()
+    val tempRawFile = File(tempFileDir, "raw.txt")
+    tempRawFile.writeText("This is a test file.")
+    val trainFile = File(tempDir.toAbsolutePath().toString(), "train.filelist")
+    trainFile.writeText("0")
+    val testFile =  File(tempDir.toAbsolutePath().toString(), "test.filelist")
+    testFile.writeText("0")
 
     assertDoesNotThrow { main(
         arrayOf("-s", tempFile.absolutePath)
@@ -53,12 +62,20 @@ testFileList: example.test.filelist""")
     tempFile.writeText("""baseDataDir: $tempDir
 workingDir: /Users/nathan/Projects/koref
 trainDataDir: .
-trainFileList: example.train.filelist
+trainFileList: train.filelist
 testDataDir: .
-testFileList: example.test.filelist
+testFileList: test.filelist
 preprocessors:
   - other
     """)
+    val tempFileDir = File(tempDir.toString() + File.separator + "0")
+    tempFileDir.mkdir()
+    val tempRawFile = File(tempFileDir, "raw.txt")
+    tempRawFile.writeText("This is a test file.")
+    val trainFile = File(tempDir.toAbsolutePath().toString(), "train.filelist")
+    trainFile.writeText("0")
+    val testFile =  File(tempDir.toAbsolutePath().toString(), "test.filelist")
+    testFile.writeText("0")
     assertDoesNotThrow {
       main(
           arrayOf("-s", tempFile.absolutePath)
