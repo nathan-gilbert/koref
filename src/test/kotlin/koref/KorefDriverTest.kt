@@ -35,31 +35,22 @@ class KorefDriverTest : KorefTests() {
 
   @Test
   fun `KorefDriver handles no preprocessors`(@TempDir tempDir: Path) {
-    val tempFile = File(tempDir.toString(), "test-settings-no-preprocessors.yml")
-    tempFile.writeText("""baseDataDir: $tempDir
+    val settingsText = """baseDataDir: $tempDir
 workingDir: /Users/nathan/Projects/koref
 trainDataDir: .
 trainFileList: train.filelist
 testDataDir: .
-testFileList: test.filelist""")
-    val tempFileDir = File(tempDir.toString() + File.separator + "0")
-    tempFileDir.mkdir()
-    val tempRawFile = File(tempFileDir, "raw.txt")
-    tempRawFile.writeText("This is a test file.")
-    val trainFile = File(tempDir.toAbsolutePath().toString(), "train.filelist")
-    trainFile.writeText("0")
-    val testFile =  File(tempDir.toAbsolutePath().toString(), "test.filelist")
-    testFile.writeText("0")
+testFileList: test.filelist"""
 
+    val tempSettingsFile = getSettingsFile(tempDir, "test-settings-no-preprocessors.yml", settingsText)
     assertDoesNotThrow { main(
-        arrayOf("-s", tempFile.absolutePath)
+        arrayOf("-s", tempSettingsFile.absolutePath)
     ) }
   }
 
   @Test
   fun `KorefDriver handles other preprocessors`(@TempDir tempDir: Path) {
-    val tempFile = File(tempDir.toString(), "test-settings-other-preprocessors.yml")
-    tempFile.writeText("""baseDataDir: $tempDir
+    val settingsText = """baseDataDir: $tempDir
 workingDir: /Users/nathan/Projects/koref
 trainDataDir: .
 trainFileList: train.filelist
@@ -67,18 +58,12 @@ testDataDir: .
 testFileList: test.filelist
 preprocessors:
   - other
-    """)
-    val tempFileDir = File(tempDir.toString() + File.separator + "0")
-    tempFileDir.mkdir()
-    val tempRawFile = File(tempFileDir, "raw.txt")
-    tempRawFile.writeText("This is a test file.")
-    val trainFile = File(tempDir.toAbsolutePath().toString(), "train.filelist")
-    trainFile.writeText("0")
-    val testFile =  File(tempDir.toAbsolutePath().toString(), "test.filelist")
-    testFile.writeText("0")
+    """
+
+    val tempSettingsFile = getSettingsFile(tempDir, "test-settings-other-processors.yml", settingsText)
     assertDoesNotThrow {
       main(
-          arrayOf("-s", tempFile.absolutePath)
+          arrayOf("-s", tempSettingsFile.absolutePath)
       )
     }
   }

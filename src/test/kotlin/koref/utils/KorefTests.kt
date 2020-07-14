@@ -6,7 +6,7 @@ import java.nio.file.Path
 
 open class KorefTests {
   companion object {
-    private const val testSettings = """baseDataDir: <base-dir>
+    private const val defaultSettingsText = """baseDataDir: <base-dir>
 workingDir: <working-dir>
 trainDataDir: .
 trainFileList: <train-filelist>
@@ -17,7 +17,7 @@ preprocessors:
 modelDir: /Users/nathan/Documents/Models/OpenNLP
 """
 
-    fun makeSettings(baseDir: String, workingDir: String): String {
+    fun makeSettings(baseDir: String, workingDir: String, settingsText: String? = null): String {
       val tempFileDir = File(baseDir + File.separator + "0")
       tempFileDir.mkdir()
       val tempFile = File(tempFileDir, "raw.txt")
@@ -27,7 +27,8 @@ modelDir: /Users/nathan/Documents/Models/OpenNLP
       val testFile =  File(baseDir, "test.filelist")
       testFile.writeText("0")
 
-      return testSettings
+      val finalSettings = settingsText ?: defaultSettingsText
+      return finalSettings
           .replace("<base-dir>", baseDir)
           .replace("<working-dir>", workingDir)
           .replace("<train-filelist>", trainFile.absolutePath)
@@ -45,5 +46,22 @@ modelDir: /Users/nathan/Documents/Models/OpenNLP
 
   fun getRawTextDoc(tempDir: String): RawTextDocument {
     return RawTextDocument("0", tempDir)
+  }
+
+  fun getSettingsFile(tempDir: Path, settingsFileName: String, settingsText: String? = null): File {
+    val tempFileDir = File(tempDir.toString() + File.separator + "0")
+    tempFileDir.mkdir()
+
+    val tempRawFile = File(tempFileDir, "raw.txt")
+    tempRawFile.writeText("This is a test file.")
+    val trainFile = File(tempDir.toAbsolutePath().toString(), "train.filelist")
+    trainFile.writeText("0")
+    val testFile =  File(tempDir.toAbsolutePath().toString(), "test.filelist")
+    testFile.writeText("0")
+
+    val tempSettingsFile = File(tempDir.toString(), settingsFileName)
+    val tempSettingsText = makeSettings(tempDir.toString(), ".", settingsText)
+    tempSettingsFile.writeText(tempSettingsText)
+    return tempSettingsFile
   }
 }
