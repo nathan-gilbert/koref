@@ -1,4 +1,6 @@
 # koref
+![Build & Lint](https://github.com/nathan-gilbert/koref/workflows/Build%20&%20Lint/badge.svg?branch=master)
+
 A coreference resolution engine based on Reconcile written in Kotlin.
 
 ## Getting Started
