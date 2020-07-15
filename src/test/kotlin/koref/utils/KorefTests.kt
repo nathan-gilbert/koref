@@ -21,7 +21,7 @@ modelDir: /Users/nathan/Documents/Models/OpenNLP
       val tempFileDir = File(baseDir + File.separator + "0")
       tempFileDir.mkdir()
       val tempFile = File(tempFileDir, "raw.txt")
-      tempFile.writeText("This is a test file.")
+      tempFile.writeText("This is a test file. This is my second sentence.")
       val trainFile = File(baseDir, "train.filelist")
       trainFile.writeText("0")
       val testFile =  File(baseDir, "test.filelist")
@@ -36,12 +36,12 @@ modelDir: /Users/nathan/Documents/Models/OpenNLP
     }
   }
 
-  private fun getSettings(tempDir: Path): String {
-    return makeSettings(tempDir.toString(), ".")
+  private fun getSettings(tempDir: Path, testSettings: String? = null): String {
+    return makeSettings(tempDir.toString(), ".", testSettings)
   }
 
-  fun getConfig(tempDir: Path): SystemConfig {
-    return SystemConfig(getSettings(tempDir))
+  fun getConfig(tempDir: Path, testSettings: String? = null): SystemConfig {
+    return SystemConfig(getSettings(tempDir, testSettings))
   }
 
   fun getRawTextDoc(tempDir: String): RawTextDocument {

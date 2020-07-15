@@ -25,6 +25,6 @@ class OpenNLPSentenceTokenizerTest : KorefTests() {
     val ot = OpenNLPTokenizer("tokens", config, arrayListOf(doc))
     ot.run(doc)
     Assertions.assertThat(doc.annotations.size).isEqualTo(1)
-    Assertions.assertThat(doc.annotations[AnnotationType.TOKEN]?.size).isEqualTo(6)
+    Assertions.assertThat(doc.annotations[AnnotationType.TOKEN]?.size).isEqualTo(12)
   }
 }
