@@ -17,27 +17,27 @@ class OpenNLPTokenizer(
 ) :
     Tokenizer(config, files) {
 
-    private var tokenizer: TokenizerME
+  private var tokenizer: TokenizerME
 
-    init {
-        val modelLoc = "${config.getModelDir()}${File.separator}en-token.bin"
-        val inputStream: InputStream = FileInputStream(modelLoc)
-        val tokenModel = TokenizerModel(inputStream)
-        tokenizer = TokenizerME(tokenModel)
+  init {
+    val modelLoc = "${config.getModelDir()}${File.separator}en-token.bin"
+    val inputStream: InputStream = FileInputStream(modelLoc)
+    val tokenModel = TokenizerModel(inputStream)
+    tokenizer = TokenizerME(tokenModel)
+  }
+
+  override fun run(doc: Document) {
+    val tokens = tokenizer.tokenize(doc.getText())
+    val spans = tokenizer.tokenizePos(doc.getText())
+    val probabilities = tokenizer.tokenProbabilities
+
+    tokens.forEachIndexed { index, tok ->
+      val ann = Annotation(AnnotationType.TOKEN, spans[index].start, spans[index].end, tok.toString())
+      ann.properties["probability"] = probabilities[index]
+      annotations.add(ann)
     }
 
-    override fun run(doc: Document) {
-        val tokens = tokenizer.tokenize(doc.getText())
-        val spans = tokenizer.tokenizePos(doc.getText())
-        val probabilities = tokenizer.tokenProbabilities
-
-        tokens.forEachIndexed { index, tok ->
-            val ann = Annotation(AnnotationType.TOKEN, spans[index].start, spans[index].end, tok.toString())
-            ann.properties["probability"] = probabilities[index]
-            annotations.add(ann)
-        }
-
-        doc.annotations[AnnotationType.TOKEN] = annotations
-        writeAnnotationsToFile(doc.getDocumentDirectory())
-    }
+    doc.annotations[AnnotationType.TOKEN] = annotations
+    writeAnnotationsToFile(doc.getDocumentDirectory())
+  }
 }
