@@ -11,7 +11,7 @@ A coreference resolution engine based on Reconcile written in Kotlin.
 - ./gradlew detekt - Linting
 - ./gradlew jacocoTestReports - Generate Code Coverage
 - ./gradlew jacocoTestCoverageVerification - Check if coverage meets specifications
-- ./gradlew dokka - Generate Documentation
+- ./gradlew dokkaHtml - Generate Documentation
 
 ## Short term TODO
 

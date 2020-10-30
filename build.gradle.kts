@@ -93,7 +93,3 @@ tasks.jacocoTestCoverageVerification {
     }
   }
 }
-
-tasks.withType<DokkaTask>().configureEach {
-  outputDirectory.set(buildDir.resolve("dokka"))
-}
