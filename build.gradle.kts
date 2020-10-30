@@ -1,7 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.jetbrains.dokka.gradle.DokkaTask
-
 
 plugins {
   id("application")
@@ -15,7 +13,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 application {
   group = "koref"
-  mainClassName = "koref.KorefDriverKt"
+  mainClass.set("koref.KorefDriverKt")
   version = "0.0.1-SNAPSHOT"
 }
 
