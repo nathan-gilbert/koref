@@ -1,14 +1,14 @@
-import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.dokka.gradle.DokkaTask
 
 
 plugins {
   id("application")
-  kotlin("jvm") version "1.3.72"
-  id("io.gitlab.arturbosch.detekt") version "1.7.1"
+  kotlin("jvm") version "1.4.10"
+  id("io.gitlab.arturbosch.detekt") version "1.14.2"
   id("jacoco")
-  id("org.jetbrains.dokka") version "0.10.1"
+  id("org.jetbrains.dokka") version "1.4.10.2"
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_11
@@ -34,7 +34,7 @@ dependencies {
   testImplementation("org.assertj:assertj-core:3.12.2")
   testImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
   testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.7.1")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.2")
 }
 
 detekt {
@@ -52,7 +52,7 @@ detekt {
 }
 
 jacoco {
-  toolVersion = "0.8.5"
+  toolVersion = "0.8.6"
 }
 
 tasks.withType<KotlinCompile> {
@@ -94,10 +94,6 @@ tasks.jacocoTestCoverageVerification {
   }
 }
 
-tasks {
-  getting(DokkaTask::class) {
-    outputFormat = "html"
-    outputDirectory = "$buildDir/dokka"
-  }
+tasks.withType<DokkaTask>().configureEach {
+  outputDirectory.set(buildDir.resolve("dokka"))
 }
-
