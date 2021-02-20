@@ -3,10 +3,10 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
   id("application")
-  kotlin("jvm") version "1.4.10"
-  id("io.gitlab.arturbosch.detekt") version "1.14.2"
+  kotlin("jvm") version "1.4.30"
+  id("io.gitlab.arturbosch.detekt") version "1.16.0-RC1"
   id("jacoco")
-  id("org.jetbrains.dokka") version "1.4.10.2"
+  id("org.jetbrains.dokka") version "1.4.20"
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_11

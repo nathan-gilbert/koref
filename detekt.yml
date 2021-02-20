@@ -111,7 +111,8 @@ style:
     active: true
   LibraryCodeMustSpecifyReturnType:
     active: true
-    excludes: "**/*.kt"
+    excludes:
+      - "**/*.kt"
     includes: "**/detekt-api/src/main/**/api/*.kt"
   MaxLineLength:
     excludes:
