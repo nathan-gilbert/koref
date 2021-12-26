@@ -58,6 +58,9 @@ formatting:
   autoCorrect: true
   MaximumLineLength:
     active: true
+  Indentation:
+    active: true
+    indentSize: 2
 
 naming:
   MemberNameEqualsClassName:

@@ -1,15 +1,21 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import io.gitlab.arturbosch.detekt.Detekt
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+  val kotlinVersion = "1.6.10"
+  val detektVersion = "1.19.0"
+  val dokkaVersion = "1.6.0"
+
+  idea
   id("application")
-  kotlin("jvm") version "1.4.30"
-  id("io.gitlab.arturbosch.detekt") version "1.16.0-RC1"
+  kotlin("jvm") version kotlinVersion
+  id("io.gitlab.arturbosch.detekt") version detektVersion
   id("jacoco")
-  id("org.jetbrains.dokka") version "1.4.20"
+  id("org.jetbrains.dokka") version dokkaVersion
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 application {
   group = "koref"
@@ -18,45 +24,37 @@ application {
 }
 
 repositories {
-  jcenter()
   mavenCentral()
 }
 
 dependencies {
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+")
-  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.+")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
+  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")
   implementation("org.jetbrains.kotlin:kotlin-reflect")
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-  implementation("org.apache.opennlp:opennlp-tools:1.9.2")
-  implementation("edu.stanford.nlp:stanford-corenlp:4.0.0")
-  testImplementation("org.assertj:assertj-core:3.12.2")
-  testImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
-  testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.2")
+  implementation("org.apache.opennlp:opennlp-tools:1.9.3")
+  implementation("edu.stanford.nlp:stanford-corenlp:4.3.2")
+  testImplementation("org.assertj:assertj-core:3.21.0")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+  testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 }
 
 detekt {
-  failFast = true // fail build on any finding
   buildUponDefaultConfig = true // preconfigure defaults
   // point to your custom config defining rules to run, overwriting default behavior
   config = files("$projectDir/detekt.yml")
   autoCorrect = true
-
-  reports {
-    html.enabled = true // observe findings in your browser with structure and code snippets
-    xml.enabled = false // checkstyle like format mainly for integrations like Jenkins
-    txt.enabled = false // similar to the console output, contains issue signature to manually edit baseline files
-  }
 }
 
 jacoco {
-  toolVersion = "0.8.6"
+  toolVersion = "0.8.7"
 }
 
 tasks.withType<KotlinCompile> {
   kotlinOptions {
     freeCompilerArgs = listOf("-Xjsr305=strict")
-    this.jvmTarget = "11"
+    jvmTarget = "17"
   }
 }
 
@@ -67,18 +65,23 @@ tasks.withType<Test> {
   }
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
-    // Target version of the generated JVM bytecode. It is used for type resolution.
-    this.jvmTarget = "11"
+tasks.withType<Detekt> {
+  // Target version of the generated JVM bytecode. It is used for type resolution.
+  jvmTarget = "17"
+  reports {
+    html.required.set(true) // observe findings in your browser with structure and code snippets
+    xml.required.set(false) // checkstyle like format mainly for integrations like Jenkins
+    txt.required.set(false) // similar to the console output, contains issue signature to manually edit baseline files
+  }
 }
 
 tasks.jacocoTestReport {
   dependsOn(":test")
   reports {
-    xml.isEnabled = false
-    csv.isEnabled = false
-    html.isEnabled = true
-    html.destination = file("$buildDir/reports/jacocoHtml")
+    xml.required.set(false)
+    csv.required.set(false)
+    html.required.set(true)
+    html.outputLocation.set(file("$buildDir/reports/jacocoHtml"))
   }
 }
 
