@@ -4,7 +4,6 @@ import koref.utils.KorefTests
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.io.TempDir
-import java.io.File
 import java.nio.file.Path
 
 class KorefDriverTest : KorefTests() {
@@ -43,9 +42,11 @@ testDataDir: .
 testFileList: test.filelist"""
 
     val tempSettingsFile = getSettingsFile(tempDir, "test-settings-no-preprocessors.yml", settingsText)
-    assertDoesNotThrow { main(
+    assertDoesNotThrow {
+      main(
         arrayOf("-s", tempSettingsFile.absolutePath)
-    ) }
+      )
+    }
   }
 
   @Test
@@ -63,7 +64,7 @@ preprocessors:
     val tempSettingsFile = getSettingsFile(tempDir, "test-settings-other-processors.yml", settingsText)
     assertDoesNotThrow {
       main(
-          arrayOf("-s", tempSettingsFile.absolutePath)
+        arrayOf("-s", tempSettingsFile.absolutePath)
       )
     }
   }

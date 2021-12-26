@@ -43,7 +43,8 @@ abstract class Preprocessor(protected val config: SystemConfig, protected val fi
       File("$outDir/$annotationDir").mkdir()
     }
     File("$outDir/$annotationDir/${this.annotationName}").printWriter().use {
-      out -> annotations.forEach { out.println(it.toString()) }
+      out ->
+      annotations.forEach { out.println(it.toString()) }
     }
   }
 }

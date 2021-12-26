@@ -24,15 +24,15 @@ modelDir: /Users/nathan/Documents/Models/OpenNLP
       tempFile.writeText("This is a test file. This is my second sentence.")
       val trainFile = File(baseDir, "train.filelist")
       trainFile.writeText("0")
-      val testFile =  File(baseDir, "test.filelist")
+      val testFile = File(baseDir, "test.filelist")
       testFile.writeText("0")
 
       val finalSettings = settingsText ?: defaultSettingsText
       return finalSettings
-          .replace("<base-dir>", baseDir)
-          .replace("<working-dir>", workingDir)
-          .replace("<train-filelist>", trainFile.absolutePath)
-          .replace("<testFileList>", testFile.absolutePath)
+        .replace("<base-dir>", baseDir)
+        .replace("<working-dir>", workingDir)
+        .replace("<train-filelist>", trainFile.absolutePath)
+        .replace("<testFileList>", testFile.absolutePath)
     }
   }
 
@@ -56,7 +56,7 @@ modelDir: /Users/nathan/Documents/Models/OpenNLP
     tempRawFile.writeText("This is a test file.")
     val trainFile = File(tempDir.toAbsolutePath().toString(), "train.filelist")
     trainFile.writeText("0")
-    val testFile =  File(tempDir.toAbsolutePath().toString(), "test.filelist")
+    val testFile = File(tempDir.toAbsolutePath().toString(), "test.filelist")
     testFile.writeText("0")
 
     val tempSettingsFile = File(tempDir.toString(), settingsFileName)

@@ -3,16 +3,12 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  val kotlinVersion = "1.6.10"
-  val detektVersion = "1.19.0"
-  val dokkaVersion = "1.6.0"
-
   idea
   id("application")
-  kotlin("jvm") version kotlinVersion
-  id("io.gitlab.arturbosch.detekt") version detektVersion
+  kotlin("jvm") version "1.6.10"
+  id("io.gitlab.arturbosch.detekt") version "1.19.0"
   id("jacoco")
-  id("org.jetbrains.dokka") version dokkaVersion
+  id("org.jetbrains.dokka") version "1.6.0"
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_17
@@ -38,6 +34,8 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
   testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
+  detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.19.0")
+  detekt("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.6.10")
 }
 
 detekt {
@@ -65,7 +63,7 @@ tasks.withType<Test> {
   }
 }
 
-tasks.withType<Detekt> {
+tasks.withType<Detekt>().configureEach {
   // Target version of the generated JVM bytecode. It is used for type resolution.
   jvmTarget = "17"
   reports {

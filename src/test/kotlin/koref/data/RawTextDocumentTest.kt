@@ -43,8 +43,7 @@ internal class RawTextDocumentTest {
   @Test
   fun `read from no file`() {
     assertThrows<FileNotFoundException> {
-      RawTextDocument("/some/dir","myTest")
+      RawTextDocument("/some/dir", "myTest")
     }
   }
-
 }

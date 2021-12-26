@@ -11,11 +11,11 @@ import java.io.FileInputStream
 import java.io.InputStream
 
 class OpenNLPTokenizer(
-    override val annotationName: String,
-    config: SystemConfig,
-    files: ArrayList<Document>
+  override val annotationName: String,
+  config: SystemConfig,
+  files: ArrayList<Document>
 ) :
-    Tokenizer(config, files) {
+  Tokenizer(config, files) {
 
   private var tokenizer: TokenizerME
 

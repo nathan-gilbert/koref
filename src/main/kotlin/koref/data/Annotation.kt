@@ -45,10 +45,10 @@ enum class AnnotationType {
  */
 @Suppress("TooManyFunctions")
 class Annotation(
-    val type: AnnotationType,
-    val startOffset: Int,
-    val endOffset: Int,
-    val content: String
+  val type: AnnotationType,
+  val startOffset: Int,
+  val endOffset: Int,
+  val content: String
 ) : Serializable {
 
   val id: UUID = UUID.randomUUID()

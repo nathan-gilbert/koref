@@ -9,11 +9,11 @@ import koref.utils.SystemConfig
 import java.io.FileReader
 
 class StanfordTokenizer(
-    override val annotationName: String,
-    config: SystemConfig,
-    files: ArrayList<Document>
+  override val annotationName: String,
+  config: SystemConfig,
+  files: ArrayList<Document>
 ) :
-    Tokenizer(config, files) {
+  Tokenizer(config, files) {
 
   override fun run(doc: Document) {
     val tokenizer = PTBTokenizer(FileReader(doc.getDocumentDirectory()), CoreLabelTokenFactory(), "")

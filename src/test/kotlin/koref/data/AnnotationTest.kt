@@ -12,12 +12,12 @@ internal class AnnotationTest {
     const val sampleWordText = "sample"
     const val sampleTextNewlines = "My\nsample\ntext"
     const val longText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque " +
-        "sed turpis in mauris pellentesque gravida. In enim tortor, ornare ac efficitur vitae, f" +
-        "inibus semper turpis. In feugiat est tortor, non vestibulum leo consectetur at. Nullam " +
-        "id lobortis leo, lobortis faucibus mauris. Nam diam enim, placerat in velit ut, imperdi" +
-        "et imperdiet purus. Integer pretium ligula sit amet nunc imperdiet finibus. Integer por" +
-        "ttitor, risus ac sagittis hendrerit, lorem nisl pellentesque enim, sit amet pharetra ip" +
-        "sum nibh sed nisl. Fusce consequat luctus erat sagittis convallis. Nulla facilisi."
+      "sed turpis in mauris pellentesque gravida. In enim tortor, ornare ac efficitur vitae, f" +
+      "inibus semper turpis. In feugiat est tortor, non vestibulum leo consectetur at. Nullam " +
+      "id lobortis leo, lobortis faucibus mauris. Nam diam enim, placerat in velit ut, imperdi" +
+      "et imperdiet purus. Integer pretium ligula sit amet nunc imperdiet finibus. Integer por" +
+      "ttitor, risus ac sagittis hendrerit, lorem nisl pellentesque enim, sit amet pharetra ip" +
+      "sum nibh sed nisl. Fusce consequat luctus erat sagittis convallis. Nulla facilisi."
   }
 
   @Test
@@ -31,7 +31,7 @@ internal class AnnotationTest {
     val ann = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
     val annStr = ann.toString()
     val expectStr = "Annotation: id=${ann.id}; type=${ann.type}; start=${ann.startOffset}; end=${ann.endOffset}; " +
-        "content=${ann.content}"
+      "content=${ann.content}"
     assertThat(annStr).isEqualTo(expectStr)
   }
 
@@ -41,8 +41,8 @@ internal class AnnotationTest {
     val annId = ann.id
     val jsonStr = ann.toJson()
     val expectStr = "{\"type\":\"SENTENCE\",\"startOffset\":0,\"endOffset\":14,\"content\":\"My sample text\"," +
-        "\"id\":\"$annId\",\"features\":{},\"properties\":{},\"cleanContent\":\"My sample text\"," +
-        "\"tokens\":[\"My\",\"sample\",\"text\"],\"length\":14}"
+      "\"id\":\"$annId\",\"features\":{},\"properties\":{},\"cleanContent\":\"My sample text\"," +
+      "\"tokens\":[\"My\",\"sample\",\"text\"],\"length\":14}"
     assertThat(jsonStr).isEqualTo(expectStr)
   }
 

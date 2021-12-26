@@ -6,9 +6,9 @@ import koref.data.Document
 import koref.utils.SystemConfig
 
 class WhiteSpaceTokenizer(
-    override val annotationName: String,
-    config: SystemConfig,
-    files: ArrayList<Document>
+  override val annotationName: String,
+  config: SystemConfig,
+  files: ArrayList<Document>
 ) : Tokenizer(config, files) {
 
   private var currentOffset = 0

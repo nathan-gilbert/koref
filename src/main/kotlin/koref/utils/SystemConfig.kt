@@ -4,16 +4,16 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import java.io.File
 
 data class SystemConfigDto(
-    val workingDir: String,
-    val baseDataDir: String,
-    val trainDataDir: String,
-    val trainFileList: String,
-    val testDataDir: String,
-    val testFileList: String,
-    var tuneDataDir: String?,
-    var tuneFileList: String?,
-    val preprocessors: ArrayList<String>?,
-    val modelDir: String?
+  val workingDir: String,
+  val baseDataDir: String,
+  val trainDataDir: String,
+  val trainFileList: String,
+  val testDataDir: String,
+  val testFileList: String,
+  var tuneDataDir: String?,
+  var tuneFileList: String?,
+  val preprocessors: ArrayList<String>?,
+  val modelDir: String?
 )
 
 @Suppress("TooManyFunctions", "EmptyCatchBlock")
