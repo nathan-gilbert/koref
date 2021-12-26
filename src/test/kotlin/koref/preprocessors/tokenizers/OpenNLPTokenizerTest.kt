@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.nio.file.Path
 
-class OpenNLPSentenceTokenizerTest : KorefTests() {
+class OpenNLPTokenizerTest : KorefTests() {
 
   @Test
   fun `test tokenizer type`(@TempDir tempDir: Path) {

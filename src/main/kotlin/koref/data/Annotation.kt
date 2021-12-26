@@ -45,17 +45,22 @@ enum class AnnotationType {
  */
 @Suppress("TooManyFunctions")
 class Annotation(
-  val type: AnnotationType,
-  val startOffset: Int,
-  val endOffset: Int,
-  val content: String
+  private val type: AnnotationType,
+  private val startOffset: Int,
+  private val endOffset: Int,
+  private val content: String
 ) : Serializable {
 
-  val id: UUID = UUID.randomUUID()
+  companion object {
+    const val serialVersionUID = 1L
+  }
+
+  private val id: UUID = UUID.randomUUID()
+  private val cleanContent: String = content.replace("\n", "")
+  private val tokens: List<String> = content.split(" ")
+
   var features: MutableMap<String, String?> = mutableMapOf()
   var properties: MutableMap<String, Any?> = mutableMapOf()
-  val cleanContent: String = content.replace("\n", "")
-  val tokens: List<String> = content.split(" ")
   val length: Int
     get() = endOffset - startOffset
 
@@ -166,7 +171,7 @@ class Annotation(
    * (starts or ends before A), and -1 if ann comes first.
    */
   fun compareSpan(ann: Annotation?): Int {
-    if (ann == null) throw NullPointerException()
+    if (ann == null) throw NullPointerException("Annotation cannot be null")
     return compareSpan(ann.startOffset, ann.endOffset)
   }
 
@@ -191,7 +196,7 @@ class Annotation(
    */
   @Suppress("ReturnCount")
   fun compareTo(other: Annotation?): Int {
-    if (other == null) throw NullPointerException()
+    if (other == null) throw NullPointerException("Other annotation cannot be null")
     val spanCompare = this.compareSpan(other)
     if (spanCompare != 0) return spanCompare
     val typeCompare = type.compareTo(other.type)
