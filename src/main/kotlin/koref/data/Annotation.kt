@@ -45,27 +45,28 @@ enum class AnnotationType {
  */
 @Suppress("TooManyFunctions")
 class Annotation(
-  private val type: AnnotationType,
-  private val startOffset: Int,
-  private val endOffset: Int,
-  private val content: String
+  val type: AnnotationType,
+  val startOffset: Int,
+  val endOffset: Int,
+  val content: String
 ) : Serializable {
 
   companion object {
     const val serialVersionUID = 1L
   }
 
-  private val id: UUID = UUID.randomUUID()
-  private val cleanContent: String = content.replace("\n", "")
-  private val tokens: List<String> = content.split(" ")
-
+  val id: UUID = UUID.randomUUID()
+  val cleanContent: String = content.replace("\n", "")
+  val tokens: List<String> = content.split(" ")
   var features: MutableMap<String, String?> = mutableMapOf()
   var properties: MutableMap<String, Any?> = mutableMapOf()
-  val length: Int
-    get() = endOffset - startOffset
 
   override fun toString(): String {
     return ("Annotation: id=$id; type=$type; start=$startOffset; end=$endOffset; content=$content")
+  }
+
+  fun length(): Int {
+    return endOffset - startOffset
   }
 
   fun toJson(): String {

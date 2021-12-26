@@ -1,5 +1,7 @@
 package koref.data
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -23,7 +25,7 @@ internal class AnnotationTest {
   @Test
   fun `annotation length is equal to bytespan`() {
     val ann = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
-    assertThat(ann.length).isEqualTo(sampleText.length)
+    assertThat(ann.length()).isEqualTo(sampleText.length)
   }
 
   @Test
@@ -37,13 +39,15 @@ internal class AnnotationTest {
 
   @Test
   fun `creates proper json representation`() {
+    val mapper = jacksonObjectMapper()
+
     val ann = Annotation(AnnotationType.SENTENCE, 0, sampleText.length, sampleText)
-    val annId = ann.id
     val jsonStr = ann.toJson()
-    val expectStr = "{\"type\":\"SENTENCE\",\"startOffset\":0,\"endOffset\":14,\"content\":\"My sample text\"," +
-      "\"id\":\"$annId\",\"features\":{},\"properties\":{},\"cleanContent\":\"My sample text\"," +
-      "\"tokens\":[\"My\",\"sample\",\"text\"],\"length\":14}"
-    assertThat(jsonStr).isEqualTo(expectStr)
+    // convert it back to an object
+    val annFromJson = mapper.readValue<Annotation>(jsonStr)
+
+    // compare the new object equals the old object
+    assertThat(ann).isEqualTo(annFromJson)
   }
 
   @Test
